@@ -4,6 +4,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -31,13 +32,13 @@ public class FirstTeleOp extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backR");
 
         //Claw Servos
-        Servo clawServo = hardwareMap.servo.get("claw");
+        Servo clawBackServo = hardwareMap.servo.get("clawRot");
+        Servo clawFrontServo= hardwareMap.servo.get("clawGrip");
 
         //Arm Servos
         Servo leftArm = hardwareMap.servo.get("leftarm");
         Servo rightArm = hardwareMap.servo.get("rightarm");
         rightArm.setDirection(Servo.Direction.REVERSE);
-/*
 
         //Spool Motors
         DcMotorEx leftSpool = hardwareMap.get(DcMotorEx.class, "LeftSpool");
@@ -46,7 +47,7 @@ public class FirstTeleOp extends LinearOpMode {
         //Reset Encoders
         leftSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-*/
+
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -82,10 +83,10 @@ public class FirstTeleOp extends LinearOpMode {
             //Set the position to set values - b=open, a=closed
             //Check Directions
             if (gamepad1.circle) {
-                clawServo.setPosition(Globals.CLAW_OPEN);
+                clawBackServo.setPosition(Globals.CLAW_UP);
             }
             if (gamepad1.cross) {
-                clawServo.setPosition(Globals.CLAW_CLOSED);
+                clawBackServo.setPosition(Globals.CLAW_DOWN);
             }
             //Move the servo by small amount - x=opening, y=closing
             //Check Directions
@@ -101,7 +102,7 @@ public class FirstTeleOp extends LinearOpMode {
            }
 
             //Move the spool
-            /*if (gamepad2.cross) {
+            if (gamepad2.cross) {
                 leftSpool.setTargetPosition(Globals.ARM_LOW);
                 rightSpool.setTargetPosition(Globals.ARM_LOW);
                 leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -116,7 +117,14 @@ public class FirstTeleOp extends LinearOpMode {
                rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                leftSpool.setVelocity(1000); // in ticks per second
                 rightSpool.setVelocity(1000);
-            }*/
+            }
+
+            if (gamepad1.left_bumper) {
+                clawFrontServo.setPosition(Globals.CLAW_OPEN);
+            }
+            if (gamepad1.right_bumper) {
+                clawFrontServo.setPosition(Globals.CLAW_CLOSED);
+            }
 
             double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
@@ -142,7 +150,8 @@ public class FirstTeleOp extends LinearOpMode {
 
 /*            switch (insertGoodName) {
                 case CLAW_IDLE:
-                    clawServo.setPosition(Globals.CLAW_OPEN);
+                    clawBackServo.setPosition(Globals.CLAW_DOWN);
+                    clawFrontServo.setPosition(Globals.CLAW_OPEN);
                     leftArm.setPosition(Globals.ARM_IDLE);
                     rightArm.setPosition(Globals.ARM_IDLE);
                     leftSpool.setTargetPosition(Globals.ARM_LOW);
@@ -156,7 +165,7 @@ public class FirstTeleOp extends LinearOpMode {
                     }
                 break;
                 case GRAB_SPECIMEN:
-                    clawServo.setPosition(Globals.CLAW_CLOSED);
+                    clawFrontServo.setPosition(Globals.CLAW_CLOSED);
                     if (gamepad1.circle) {
                         insertGoodName = InsertGoodName.HOLD_SPECIMEN;
                     } else if (gamepad1.cross) {
@@ -166,6 +175,7 @@ public class FirstTeleOp extends LinearOpMode {
                 break;
                 case HOLD_SPECIMEN:
                     if (gamepad1.circle) {
+                    clawBackServo.setPosition(Globals.CLAW_UP);
                     leftArm.setPosition(Globals.ARM_DEPOSIT);
                     rightArm.setPosition(Globals.ARM_DEPOSIT);
                     leftSpool.setTargetPosition(Globals.ARM_HIGH);
@@ -179,7 +189,7 @@ public class FirstTeleOp extends LinearOpMode {
                 break;
                 case DEPOSIT_SPECIMEN:
                     if (gamepad1.circle) {
-                    clawServo.setPosition(Globals.CLAW_OPEN);
+                    clawFrontServo.setPosition(Globals.CLAW_OPEN);
                     insertGoodName = InsertGoodName.CLAW_IDLE;
                 }
             if (gamepad1.cross && insertGoodName != InsertGoodName.CLAW_IDLE) {
