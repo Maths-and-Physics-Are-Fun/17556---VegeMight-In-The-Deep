@@ -10,6 +10,6 @@ public class Globals {
     public static double ARM_DEPOSIT = 0.15;
     public static double ARM_IDLE = 0.4;
 
-    public static int ARM_LOW = 150;
-    public static int ARM_HIGH = 200;
+    public static int ARM_LOW = 0;
+    public static int ARM_HIGH = 2000;
 }

@@ -43,6 +43,7 @@ public class FirstTeleOp extends LinearOpMode {
         //Spool Motors
         DcMotorEx leftSpool = hardwareMap.get(DcMotorEx.class, "LeftSpool");
         DcMotorEx rightSpool = hardwareMap.get(DcMotorEx.class, "RightSpool");
+        rightSpool.setDirection(DcMotorEx.Direction.REVERSE);
 
         //Reset Encoders
         leftSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -102,7 +103,7 @@ public class FirstTeleOp extends LinearOpMode {
            }
 
             //Move the spool
-            if (gamepad2.cross) {
+            if (gamepad1.dpad_down) {
                 leftSpool.setTargetPosition(Globals.ARM_LOW);
                 rightSpool.setTargetPosition(Globals.ARM_LOW);
                 leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -110,7 +111,7 @@ public class FirstTeleOp extends LinearOpMode {
                 leftSpool.setVelocity(1000); // in ticks per second
                 rightSpool.setVelocity(1000);
             }
-            if (gamepad2.circle){
+            if (gamepad1.dpad_up){
                leftSpool.setTargetPosition(Globals.ARM_HIGH);
                rightSpool.setTargetPosition(Globals.ARM_HIGH);
                leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
