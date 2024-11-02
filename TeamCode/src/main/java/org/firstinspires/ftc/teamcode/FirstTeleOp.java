@@ -8,20 +8,20 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.constants.Globals;
 
+import org.firstinspires.ftc.teamcode.statuses.ScoreSystem;
+
 
 @TeleOp (name = "TeleOp 1")
 public class FirstTeleOp extends LinearOpMode {
-    public enum InsertGoodName {
-        GRAB_SPECIMEN,
-        HOLD_SPECIMEN,
-        DEPOSIT_SPECIMEN,
-        CLAW_IDLE
-    }
-    InsertGoodName insertGoodName = InsertGoodName.CLAW_IDLE;
+    ScoreSystem scoreSystemStatus = ScoreSystem.IDLE;
+    ElapsedTime clickTimer = new ElapsedTime();
+    int targetLiftPosition = Globals.LIFT_LOW;
+    boolean liftPositionAlreadySet = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -32,8 +32,8 @@ public class FirstTeleOp extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backR");
 
         //Claw Servos
-        Servo clawBackServo = hardwareMap.servo.get("clawRot");
-        Servo clawFrontServo= hardwareMap.servo.get("clawGrip");
+        Servo wristServo = hardwareMap.servo.get("clawRot");
+        Servo clawServo= hardwareMap.servo.get("clawGrip");
 
         //Arm Servos
         Servo leftArm = hardwareMap.servo.get("leftarm");
@@ -71,6 +71,7 @@ public class FirstTeleOp extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
+            // DRIVETRAIN
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
@@ -80,51 +81,6 @@ public class FirstTeleOp extends LinearOpMode {
             // The equivalent button is start on Xbox-style controllers.
             if (gamepad1.options) {
                 imu.resetYaw();
-            }
-            //Set the position to set values - b=open, a=closed
-            //Check Directions
-            if (gamepad1.circle) {
-                clawBackServo.setPosition(Globals.CLAW_UP);
-            }
-            if (gamepad1.cross) {
-                clawBackServo.setPosition(Globals.CLAW_DOWN);
-            }
-            //Move the servo by small amount - x=opening, y=closing
-            //Check Directions
-
-            //Move the arm
-           if (gamepad1.square) {
-               leftArm.setPosition(Globals.ARM_IDLE);
-               rightArm.setPosition(Globals.ARM_IDLE);
-           }
-           if (gamepad1.triangle) {
-               leftArm.setPosition(Globals.ARM_DEPOSIT);
-               rightArm.setPosition(Globals.ARM_DEPOSIT);
-           }
-
-            //Move the spool
-            if (gamepad1.dpad_down) {
-                leftSpool.setTargetPosition(Globals.ARM_LOW);
-                rightSpool.setTargetPosition(Globals.ARM_LOW);
-                leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                leftSpool.setVelocity(1000); // in ticks per second
-                rightSpool.setVelocity(1000);
-            }
-            if (gamepad1.dpad_up){
-               leftSpool.setTargetPosition(Globals.ARM_HIGH);
-               rightSpool.setTargetPosition(Globals.ARM_HIGH);
-               leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-               rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-               leftSpool.setVelocity(1000); // in ticks per second
-                rightSpool.setVelocity(1000);
-            }
-
-            if (gamepad1.left_bumper) {
-                clawFrontServo.setPosition(Globals.CLAW_OPEN);
-            }
-            if (gamepad1.right_bumper) {
-                clawFrontServo.setPosition(Globals.CLAW_CLOSED);
             }
 
             double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
@@ -149,54 +105,118 @@ public class FirstTeleOp extends LinearOpMode {
             frontRightMotor.setPower(frontRightPower);
             backRightMotor.setPower(backRightPower);
 
-/*            switch (insertGoodName) {
-                case CLAW_IDLE:
-                    clawBackServo.setPosition(Globals.CLAW_DOWN);
-                    clawFrontServo.setPosition(Globals.CLAW_OPEN);
+            switch (scoreSystemStatus) {
+                case IDLE:
+                    wristServo.setPosition(Globals.WRIST_UP);
+                    clawServo.setPosition(Globals.CLAW_CLOSED);
                     leftArm.setPosition(Globals.ARM_IDLE);
                     rightArm.setPosition(Globals.ARM_IDLE);
-                    leftSpool.setTargetPosition(Globals.ARM_LOW);
-                    rightSpool.setTargetPosition(Globals.ARM_LOW);
-                    leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    leftSpool.setVelocity(1000); // in ticks per second
-                    rightSpool.setVelocity(1000);
-                    if (gamepad1.circle){
-                        insertGoodName = InsertGoodName.GRAB_SPECIMEN;
+                    if (!liftPositionAlreadySet) {
+                        targetLiftPosition = Globals.LIFT_LOW;
+                        liftPositionAlreadySet = true;
                     }
-                break;
+                    if (gamepad1.circle && clickTimer.milliseconds() > 500) {
+                        clickTimer.reset();
+                        scoreSystemStatus = ScoreSystem.DEPOSIT_SPECIMEN;
+                        liftPositionAlreadySet = false;
+                    } else if (gamepad1.cross && clickTimer.milliseconds() > 500) {
+                        clickTimer.reset();
+                        scoreSystemStatus = ScoreSystem.CLAW_HOVER;
+                        liftPositionAlreadySet = false;
+                    }
+                    break;
+                case CLAW_HOVER:
+                    wristServo.setPosition(Globals.WRIST_DOWN);
+                    clawServo.setPosition(Globals.CLAW_OPEN);
+                    leftArm.setPosition(Globals.ARM_HOVER);
+                    rightArm.setPosition(Globals.ARM_HOVER);
+                    if (!liftPositionAlreadySet) {
+                        targetLiftPosition = Globals.LIFT_LOW;
+                        liftPositionAlreadySet = true;
+                    }
+                    if (gamepad1.circle && clickTimer.milliseconds() > 500){
+                        clickTimer.reset();
+                        scoreSystemStatus = ScoreSystem.GRAB_SPECIMEN;
+                        liftPositionAlreadySet = false;
+                    } else if (gamepad1.cross && clickTimer.milliseconds() > 500) {
+                        clickTimer.reset();
+                        scoreSystemStatus = ScoreSystem.IDLE;
+                        liftPositionAlreadySet = false;
+                    }
+                    break;
                 case GRAB_SPECIMEN:
-                    clawFrontServo.setPosition(Globals.CLAW_CLOSED);
-                    if (gamepad1.circle) {
-                        insertGoodName = InsertGoodName.HOLD_SPECIMEN;
-                    } else if (gamepad1.cross) {
-                        insertGoodName = InsertGoodName.CLAW_IDLE;
+                    clawServo.setPosition(Globals.CLAW_CLOSED);
+                    leftArm.setPosition(Globals.ARM_PICKUP);
+                    rightArm.setPosition(Globals.ARM_PICKUP);
+                    if (gamepad1.circle && clickTimer.milliseconds() > 500) {
+                        clickTimer.reset();
+                        scoreSystemStatus = ScoreSystem.IDLE;
+                        liftPositionAlreadySet = false;
+                    } else if (gamepad1.cross && clickTimer.milliseconds() > 500) {
+                        clickTimer.reset();
+                        scoreSystemStatus = ScoreSystem.CLAW_HOVER;
+                        liftPositionAlreadySet = false;
                     }
-
-                break;
-                case HOLD_SPECIMEN:
-                    if (gamepad1.circle) {
-                    clawBackServo.setPosition(Globals.CLAW_UP);
+                    break;
+//                case HOLD_SPECIMEN:
+//                    if (gamepad1.circle && clickTimer.milliseconds() > 500) {
+//                        clickTimer.reset();
+//                        wristServo.setPosition(Globals.WRIST_DOWN);
+//                        leftArm.setPosition(Globals.ARM_DEPOSIT);
+//                        rightArm.setPosition(Globals.ARM_DEPOSIT);
+//                        leftSpool.setTargetPosition(Globals.ARM_HIGH);
+//                        rightSpool.setTargetPosition(Globals.ARM_HIGH);
+//                        leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                        rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                        leftSpool.setVelocity(1000); // in ticks per second
+//                        rightSpool.setVelocity(1000);
+//                        scoreSystemStatus = ScoreSystem.DEPOSIT_SPECIMEN;
+//                    } else if (gamepad1.cross && clickTimer.milliseconds() > 500) {
+//                        clickTimer.reset();
+//                        scoreSystemStatus = ScoreSystem.IDLE;
+//                    }
+//                    break;
+                case DEPOSIT_SPECIMEN:
+                    wristServo.setPosition(Globals.WRIST_DOWN);
                     leftArm.setPosition(Globals.ARM_DEPOSIT);
                     rightArm.setPosition(Globals.ARM_DEPOSIT);
-                    leftSpool.setTargetPosition(Globals.ARM_HIGH);
-                    rightSpool.setTargetPosition(Globals.ARM_HIGH);
-                    leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    leftSpool.setVelocity(1000); // in ticks per second
-                    rightSpool.setVelocity(1000);
-                    insertGoodName = InsertGoodName.DEPOSIT_SPECIMEN;
+                    if (!liftPositionAlreadySet) {
+                        targetLiftPosition = Globals.LIFT_HIGH;
+                        liftPositionAlreadySet = true;
                     }
-                break;
-                case DEPOSIT_SPECIMEN:
-                    if (gamepad1.circle) {
-                    clawFrontServo.setPosition(Globals.CLAW_OPEN);
-                    insertGoodName = InsertGoodName.CLAW_IDLE;
-                }
-            if (gamepad1.cross && insertGoodName != InsertGoodName.CLAW_IDLE) {
-                insertGoodName = InsertGoodName.CLAW_IDLE;
+                    if (gamepad1.circle && clickTimer.milliseconds() > 500) {
+                        clickTimer.reset();
+                        clawServo.setPosition(Globals.CLAW_OPEN);
+                        while (gamepad1.circle) {
+                            scoreSystemStatus = ScoreSystem.IDLE;
+                        }
+                        liftPositionAlreadySet = false;
+                    }
+                    if (gamepad1.cross && scoreSystemStatus != ScoreSystem.IDLE && clickTimer.milliseconds() > 500) {
+                        clickTimer.reset();
+                        scoreSystemStatus = ScoreSystem.IDLE;
+                        liftPositionAlreadySet = false;
+                    }
+                    break;
             }
-            } */
+
+            // MANUAL LIFT CONTROL
+            if (gamepad1.left_trigger > 0.5) {
+                targetLiftPosition -= (int) (gamepad1.left_trigger*10);
+            } else if (gamepad1.right_trigger > 0.5) {
+                targetLiftPosition += (int) (gamepad1.right_trigger*10);
+            }
+            leftSpool.setTargetPosition(targetLiftPosition);
+            rightSpool.setTargetPosition(targetLiftPosition);
+            leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftSpool.setVelocity(1000); // in ticks per second
+            rightSpool.setVelocity(1000);
+
+            // EMERGENCY STOP?
+
+            telemetry.addData("Scoring System Data", scoreSystemStatus);
+            telemetry.update();
         }
     }
 }
