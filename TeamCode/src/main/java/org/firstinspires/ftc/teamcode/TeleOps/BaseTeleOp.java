@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -21,6 +21,8 @@ public class BaseTeleOp extends LinearOpMode {
     ElapsedTime clickTimer = new ElapsedTime();
     int targetLiftPosition = Globals.LIFT_LOW;
     boolean liftPositionAlreadySet = false;
+    double targetArmPosition = 0;
+    boolean armPositionAlreadSet = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -36,7 +38,7 @@ public class BaseTeleOp extends LinearOpMode {
 
         //Claw Servos
         Servo wristServo = hardwareMap.servo.get("clawRot");
-        Servo clawServo= hardwareMap.servo.get("clawGrip");
+        Servo clawServo = hardwareMap.servo.get("clawGrip");
 
         //Arm Servos
         Servo leftArm = hardwareMap.servo.get("leftarm");
@@ -110,105 +112,132 @@ public class BaseTeleOp extends LinearOpMode {
 
             switch (scoreSystemStatus) {
                 case IDLE:
+                    // Set GamePad Colour to white
+                    gamepad1.setLedColor(255, 255, 255, 100);
+                    gamepad2.setLedColor(255, 255, 255, 100);
+
                     wristServo.setPosition(Globals.WRIST_UP);
                     clawServo.setPosition(Globals.CLAW_CLOSED);
-                    leftArm.setPosition(Globals.ARM_IDLE);
-                    rightArm.setPosition(Globals.ARM_IDLE);
                     if (!liftPositionAlreadySet) {
                         targetLiftPosition = Globals.LIFT_LOW;
                         liftPositionAlreadySet = true;
                     }
-                    if (gamepad1.circle && clickTimer.milliseconds() > 500) {
+                    if (!armPositionAlreadSet) {
+                        targetArmPosition = Globals.ARM_IDLE;
+                        armPositionAlreadSet = true;
+                    }
+                    if (gamepad2.right_bumper && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
                         scoreSystemStatus = ScoreSystem.DEPOSIT_SPECIMEN;
                         liftPositionAlreadySet = false;
-                    } else if (gamepad1.cross && clickTimer.milliseconds() > 500) {
+                        armPositionAlreadSet = false;
+                    } else if (gamepad2.left_bumper && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
                         scoreSystemStatus = ScoreSystem.CLAW_HOVER;
                         liftPositionAlreadySet = false;
+                        armPositionAlreadSet = false;
                     }
                     break;
                 case CLAW_HOVER:
+                    // Set GamePad Colour to red if Red Aliance and light blue if Blue Alliance
+                    if (alliance == Alliance.RED) {
+                        gamepad1.setLedColor(217, 14, 14, 100);
+                        gamepad2.setLedColor(217, 14, 14, 100);
+                    } else {
+                        gamepad1.setLedColor(107, 233, 255, 100);
+                        gamepad2.setLedColor(107, 233, 255, 100);
+                    }
+
                     wristServo.setPosition(Globals.WRIST_DOWN);
                     clawServo.setPosition(Globals.CLAW_OPEN);
-                    leftArm.setPosition(Globals.ARM_HOVER);
-                    rightArm.setPosition(Globals.ARM_HOVER);
                     if (!liftPositionAlreadySet) {
                         targetLiftPosition = Globals.LIFT_LOW;
                         liftPositionAlreadySet = true;
                     }
-                    if (gamepad1.circle && clickTimer.milliseconds() > 500){
+                    if (!armPositionAlreadSet) {
+                        targetArmPosition = Globals.ARM_HOVER;
+                        armPositionAlreadSet = true;
+                    }
+                    if (gamepad2.right_bumper && clickTimer.milliseconds() > 500){
                         clickTimer.reset();
                         scoreSystemStatus = ScoreSystem.GRAB_SPECIMEN;
                         liftPositionAlreadySet = false;
-                    } else if (gamepad1.cross && clickTimer.milliseconds() > 500) {
+                        armPositionAlreadSet = false;
+                    } else if (gamepad2.left_bumper && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
                         scoreSystemStatus = ScoreSystem.IDLE;
                         liftPositionAlreadySet = false;
+                        armPositionAlreadSet = false;
                     }
                     break;
                 case GRAB_SPECIMEN:
+                    // Set GamePad Colour to orange if Red Alliance and dark blue if Blue Alliance
+                    if (alliance == Alliance.RED) {
+                        gamepad1.setLedColor(255, 137, 69, 100);
+                        gamepad2.setLedColor(255, 137, 69, 100);
+                    } else {
+                        gamepad1.setLedColor(43, 131, 255, 100);
+                        gamepad2.setLedColor(43, 131, 255, 100);
+                    }
+
                     clawServo.setPosition(Globals.CLAW_CLOSED);
-                    leftArm.setPosition(Globals.ARM_PICKUP);
-                    rightArm.setPosition(Globals.ARM_PICKUP);
-                    if (gamepad1.circle && clickTimer.milliseconds() > 500) {
+                    if (!armPositionAlreadSet) {
+                        targetArmPosition = Globals.ARM_PICKUP;
+                        armPositionAlreadSet = true;
+                    }
+                    if (gamepad2.right_bumper && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
                         scoreSystemStatus = ScoreSystem.IDLE;
                         liftPositionAlreadySet = false;
-                    } else if (gamepad1.cross && clickTimer.milliseconds() > 500) {
+                        armPositionAlreadSet = false;
+                        gamepad1.rumble(500);
+                        gamepad2.rumble(500);
+                    } else if (gamepad2.left_bumper && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
                         scoreSystemStatus = ScoreSystem.CLAW_HOVER;
                         liftPositionAlreadySet = false;
+                        armPositionAlreadSet = false;
                     }
                     break;
-//                case HOLD_SPECIMEN:
-//                    if (gamepad1.circle && clickTimer.milliseconds() > 500) {
-//                        clickTimer.reset();
-//                        wristServo.setPosition(Globals.WRIST_DOWN);
-//                        leftArm.setPosition(Globals.ARM_DEPOSIT);
-//                        rightArm.setPosition(Globals.ARM_DEPOSIT);
-//                        leftSpool.setTargetPosition(Globals.ARM_HIGH);
-//                        rightSpool.setTargetPosition(Globals.ARM_HIGH);
-//                        leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                        rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//                        leftSpool.setVelocity(1000); // in ticks per second
-//                        rightSpool.setVelocity(1000);
-//                        scoreSystemStatus = ScoreSystem.DEPOSIT_SPECIMEN;
-//                    } else if (gamepad1.cross && clickTimer.milliseconds() > 500) {
-//                        clickTimer.reset();
-//                        scoreSystemStatus = ScoreSystem.IDLE;
-//                    }
-//                    break;
                 case DEPOSIT_SPECIMEN:
+                    // Set GamePad Colour to yellow if Red Alliance and light purple if Blue Alliance
+                    if (alliance == Alliance.RED) {
+                        gamepad1.setLedColor(255, 229, 31, 100);
+                        gamepad2.setLedColor(255, 229, 31, 100);
+                    } else {
+                        gamepad1.setLedColor(109, 31, 255, 100);
+                        gamepad2.setLedColor(109, 31, 255, 100);
+                    }
+
                     wristServo.setPosition(Globals.WRIST_DOWN);
-                    leftArm.setPosition(Globals.ARM_DEPOSIT);
-                    rightArm.setPosition(Globals.ARM_DEPOSIT);
                     if (!liftPositionAlreadySet) {
                         targetLiftPosition = Globals.LIFT_HIGH;
                         liftPositionAlreadySet = true;
                     }
-                    if (gamepad1.circle && clickTimer.milliseconds() > 500) {
+                    if (!armPositionAlreadSet) {
+                        targetArmPosition = Globals.ARM_DEPOSIT;
+                        armPositionAlreadSet = true;
+                    }
+                    if (gamepad2.right_bumper && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
                         clawServo.setPosition(Globals.CLAW_OPEN);
                         while (gamepad1.circle) {
                             scoreSystemStatus = ScoreSystem.IDLE;
                         }
                         liftPositionAlreadySet = false;
+                        armPositionAlreadSet = false;
                     }
-                    if (gamepad1.cross && scoreSystemStatus != ScoreSystem.IDLE && clickTimer.milliseconds() > 500) {
+                    if (gamepad2.left_bumper && scoreSystemStatus != ScoreSystem.IDLE && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
                         scoreSystemStatus = ScoreSystem.IDLE;
                         liftPositionAlreadySet = false;
+                        armPositionAlreadSet = false;
                     }
                     break;
             }
 
             // MANUAL LIFT CONTROL
-            if (gamepad1.left_trigger > 0.5) {
-                targetLiftPosition -= (int) (gamepad1.left_trigger*10);
-            } else if (gamepad1.right_trigger > 0.5) {
-                targetLiftPosition += (int) (gamepad1.right_trigger*10);
-            }
+            targetLiftPosition += (int) (gamepad2.left_stick_y*10);
             leftSpool.setTargetPosition(targetLiftPosition);
             rightSpool.setTargetPosition(targetLiftPosition);
             leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -216,7 +245,17 @@ public class BaseTeleOp extends LinearOpMode {
             leftSpool.setVelocity(1000); // in ticks per second
             rightSpool.setVelocity(1000);
 
-            // EMERGENCY STOP?
+            // MANUAL ARM CONTROL
+            targetArmPosition += (int) (gamepad2.right_stick_y*0.01);
+            leftArm.setPosition(Globals.ARM_IDLE);
+            rightArm.setPosition(Globals.ARM_IDLE);
+
+            // EMERGENCY STOP BACK TO IDLE POSITION
+            if (gamepad2.options) {
+                scoreSystemStatus = ScoreSystem.IDLE;
+                liftPositionAlreadySet = false;
+                armPositionAlreadSet = false;
+            }
 
             telemetry.addData("Scoring System Data", scoreSystemStatus);
             telemetry.update();
