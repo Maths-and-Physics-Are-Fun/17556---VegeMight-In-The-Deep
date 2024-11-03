@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -13,11 +12,11 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.constants.Globals;
 
+import org.firstinspires.ftc.teamcode.statuses.Alliance;
 import org.firstinspires.ftc.teamcode.statuses.ScoreSystem;
 
 
-@TeleOp (name = "TeleOp 1")
-public class FirstTeleOp extends LinearOpMode {
+public class BaseTeleOp extends LinearOpMode {
     ScoreSystem scoreSystemStatus = ScoreSystem.IDLE;
     ElapsedTime clickTimer = new ElapsedTime();
     int targetLiftPosition = Globals.LIFT_LOW;
@@ -25,6 +24,10 @@ public class FirstTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        // Checks the name of the child class that is calling this method
+        // If it contains "Blue" then the alliance is BLUE, if not it is RED
+        Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
+
         // Drivetrain motors
         DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontL");
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backL");
