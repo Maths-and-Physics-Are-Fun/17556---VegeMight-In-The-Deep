@@ -9,9 +9,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.constants.Globals;
-
 import org.firstinspires.ftc.teamcode.statuses.Alliance;
 import org.firstinspires.ftc.teamcode.statuses.ScoreSystem;
 
@@ -78,8 +76,9 @@ public class BaseTeleOp extends LinearOpMode {
         while (opModeIsActive()) {
             // DRIVETRAIN
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
-            double x = gamepad1.left_stick_x;
+            double x = gamepad1.left_stick_x*1.1;
             double rx = gamepad1.right_stick_x;
+/*
 
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.
@@ -95,15 +94,16 @@ public class BaseTeleOp extends LinearOpMode {
             double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
 
             rotX = rotX * 1.1;  // Counteract imperfect strafing
+*/
 
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
-            double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-            double frontLeftPower = (rotY + rotX + rx) / denominator;
-            double backLeftPower = (rotY - rotX + rx) / denominator;
-            double frontRightPower = (rotY - rotX - rx) / denominator;
-            double backRightPower = (rotY + rotX - rx) / denominator;
+            double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+            double frontLeftPower = (y + x + rx) / denominator;
+            double backLeftPower = (y - x + rx) / denominator;
+            double frontRightPower = (y - x - rx) / denominator;
+            double backRightPower = (y + x - rx) / denominator;
 
             frontLeftMotor.setPower(frontLeftPower);
             backLeftMotor.setPower(backLeftPower);
@@ -237,7 +237,7 @@ public class BaseTeleOp extends LinearOpMode {
             }
 
             // MANUAL LIFT CONTROL
-            targetLiftPosition += (int) (gamepad2.left_stick_y*10);
+            targetLiftPosition += (int) (-gamepad2.left_stick_y*20);
             leftSpool.setTargetPosition(targetLiftPosition);
             rightSpool.setTargetPosition(targetLiftPosition);
             leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -246,9 +246,9 @@ public class BaseTeleOp extends LinearOpMode {
             rightSpool.setVelocity(1000);
 
             // MANUAL ARM CONTROL
-            targetArmPosition += (int) (gamepad2.right_stick_y*0.01);
-            leftArm.setPosition(Globals.ARM_IDLE);
-            rightArm.setPosition(Globals.ARM_IDLE);
+            targetArmPosition += (float) (gamepad2.right_stick_y*0.01);
+            leftArm.setPosition(targetArmPosition);
+            rightArm.setPosition(targetArmPosition);
 
             // EMERGENCY STOP BACK TO IDLE POSITION
             if (gamepad2.options) {
