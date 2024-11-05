@@ -141,11 +141,11 @@ public class BaseTeleOp extends LinearOpMode {
                 case CLAW_HOVER:
                     // Set GamePad Colour to red if Red Aliance and light blue if Blue Alliance
                     if (alliance == Alliance.RED) {
-                        gamepad1.setLedColor(217, 14, 14, 100);
-                        gamepad2.setLedColor(217, 14, 14, 100);
+                        gamepad1.setLedColor(217/255, 14/255, 14/255, 100);
+                        gamepad2.setLedColor(217/255, 14/255, 14/255, 100);
                     } else {
-                        gamepad1.setLedColor(107, 233, 255, 100);
-                        gamepad2.setLedColor(107, 233, 255, 100);
+                        gamepad1.setLedColor(107/255, 233/255, 255/255, 100);
+                        gamepad2.setLedColor(107/255, 233/255, 255/255, 100);
                     }
 
                     wristServo.setPosition(Globals.WRIST_DOWN);
@@ -173,11 +173,11 @@ public class BaseTeleOp extends LinearOpMode {
                 case GRAB_SPECIMEN:
                     // Set GamePad Colour to orange if Red Alliance and dark blue if Blue Alliance
                     if (alliance == Alliance.RED) {
-                        gamepad1.setLedColor(255, 137, 69, 100);
-                        gamepad2.setLedColor(255, 137, 69, 100);
+                        gamepad1.setLedColor(255/255, 137/255, 69/255, 100);
+                        gamepad2.setLedColor(255/255, 137/255, 69/255, 100);
                     } else {
-                        gamepad1.setLedColor(43, 131, 255, 100);
-                        gamepad2.setLedColor(43, 131, 255, 100);
+                        gamepad1.setLedColor(43/255, 131/255, 255/255, 100);
+                        gamepad2.setLedColor(43/255, 131/255, 255/255, 100);
                     }
 
                     clawServo.setPosition(Globals.CLAW_CLOSED);
@@ -202,11 +202,11 @@ public class BaseTeleOp extends LinearOpMode {
                 case DEPOSIT_SPECIMEN:
                     // Set GamePad Colour to yellow if Red Alliance and light purple if Blue Alliance
                     if (alliance == Alliance.RED) {
-                        gamepad1.setLedColor(255, 229, 31, 100);
-                        gamepad2.setLedColor(255, 229, 31, 100);
+                        gamepad1.setLedColor(255/255, 229/255, 31/255, 100);
+                        gamepad2.setLedColor(255/255, 229/255, 31/255, 100);
                     } else {
-                        gamepad1.setLedColor(109, 31, 255, 100);
-                        gamepad2.setLedColor(109, 31, 255, 100);
+                        gamepad1.setLedColor(109/255, 31/255, 255/255, 100);
+                        gamepad2.setLedColor(109/255, 31/255, 255/255, 100);
                     }
 
                     wristServo.setPosition(Globals.WRIST_DOWN);
@@ -238,6 +238,9 @@ public class BaseTeleOp extends LinearOpMode {
 
             // MANUAL LIFT CONTROL
             targetLiftPosition += (int) (-gamepad2.left_stick_y*20);
+            if (targetLiftPosition < -50) {
+                targetLiftPosition = -50;
+            }
             leftSpool.setTargetPosition(targetLiftPosition);
             rightSpool.setTargetPosition(targetLiftPosition);
             leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
