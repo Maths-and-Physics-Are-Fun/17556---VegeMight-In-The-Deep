@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.statuses;
+package org.firstinspires.ftc.teamcode.common.statuses;
 
 public enum ScoreSystem {
     CLAW_HOVER,

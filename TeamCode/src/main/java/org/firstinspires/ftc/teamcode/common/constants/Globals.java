@@ -1,8 +1,11 @@
-package org.firstinspires.ftc.teamcode.constants;
+package org.firstinspires.ftc.teamcode.common.constants;
 
+import com.acmerobotics.dashboard.config.Config;
+
+@Config
 public class Globals {
-    public static double WRIST_UP = 0.8;
-    public static double WRIST_DOWN = 0;
+    public static double WRIST_IDLE = 0.8;
+    public static double WRIST_PICKUP = 0;
 
     public static double CLAW_OPEN = 0.6;
     public static double CLAW_CLOSED=1;

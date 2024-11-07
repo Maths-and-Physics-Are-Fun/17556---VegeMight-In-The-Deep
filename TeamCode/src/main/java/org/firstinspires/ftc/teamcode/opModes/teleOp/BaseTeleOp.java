@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TeleOps;
+package org.firstinspires.ftc.teamcode.opModes.teleOp;
 
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -9,9 +9,9 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.constants.Globals;
-import org.firstinspires.ftc.teamcode.statuses.Alliance;
-import org.firstinspires.ftc.teamcode.statuses.ScoreSystem;
+import org.firstinspires.ftc.teamcode.common.constants.Globals;
+import org.firstinspires.ftc.teamcode.common.statuses.Alliance;
+import org.firstinspires.ftc.teamcode.common.statuses.ScoreSystem;
 
 
 public class BaseTeleOp extends LinearOpMode {
@@ -116,7 +116,7 @@ public class BaseTeleOp extends LinearOpMode {
                     gamepad1.setLedColor(255, 255, 255, 100);
                     gamepad2.setLedColor(255, 255, 255, 100);
 
-                    wristServo.setPosition(Globals.WRIST_UP);
+                    wristServo.setPosition(Globals.WRIST_IDLE);
                     clawServo.setPosition(Globals.CLAW_CLOSED);
                     if (!liftPositionAlreadySet) {
                         targetLiftPosition = Globals.LIFT_LOW;
@@ -148,7 +148,7 @@ public class BaseTeleOp extends LinearOpMode {
                         gamepad2.setLedColor(107/255, 233/255, 255/255, 100);
                     }
 
-                    wristServo.setPosition(Globals.WRIST_DOWN);
+                    wristServo.setPosition(Globals.WRIST_PICKUP);
                     clawServo.setPosition(Globals.CLAW_OPEN);
                     if (!liftPositionAlreadySet) {
                         targetLiftPosition = Globals.LIFT_LOW;
@@ -209,7 +209,7 @@ public class BaseTeleOp extends LinearOpMode {
                         gamepad2.setLedColor(109/255, 31/255, 255/255, 100);
                     }
 
-                    wristServo.setPosition(Globals.WRIST_DOWN);
+                    wristServo.setPosition(Globals.WRIST_PICKUP);
                     if (!liftPositionAlreadySet) {
                         targetLiftPosition = Globals.LIFT_HIGH;
                         liftPositionAlreadySet = true;
