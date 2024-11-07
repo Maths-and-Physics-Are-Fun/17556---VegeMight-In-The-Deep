@@ -128,17 +128,17 @@ public class BaseTeleOp extends LinearOpMode {
                     }
                     if (gamepad2.right_bumper && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
-                        scoreSystemStatus = ScoreSystem.DEPOSIT_SPECIMEN;
+                        scoreSystemStatus = ScoreSystem.DEPOSIT;
                         liftPositionAlreadySet = false;
                         armPositionAlreadSet = false;
                     } else if (gamepad2.left_bumper && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
-                        scoreSystemStatus = ScoreSystem.CLAW_HOVER;
+                        scoreSystemStatus = ScoreSystem.HOVER;
                         liftPositionAlreadySet = false;
                         armPositionAlreadSet = false;
                     }
                     break;
-                case CLAW_HOVER:
+                case HOVER:
                     // Set GamePad Colour to red if Red Aliance and light blue if Blue Alliance
                     if (alliance == Alliance.RED) {
                         gamepad1.setLedColor(217/255, 14/255, 14/255, 100);
@@ -160,7 +160,7 @@ public class BaseTeleOp extends LinearOpMode {
                     }
                     if (gamepad2.right_bumper && clickTimer.milliseconds() > 500){
                         clickTimer.reset();
-                        scoreSystemStatus = ScoreSystem.GRAB_SPECIMEN;
+                        scoreSystemStatus = ScoreSystem.GRAB;
                         liftPositionAlreadySet = false;
                         armPositionAlreadSet = false;
                     } else if (gamepad2.left_bumper && clickTimer.milliseconds() > 500) {
@@ -170,7 +170,7 @@ public class BaseTeleOp extends LinearOpMode {
                         armPositionAlreadSet = false;
                     }
                     break;
-                case GRAB_SPECIMEN:
+                case GRAB:
                     // Set GamePad Colour to orange if Red Alliance and dark blue if Blue Alliance
                     if (alliance == Alliance.RED) {
                         gamepad1.setLedColor(255/255, 137/255, 69/255, 100);
@@ -194,12 +194,12 @@ public class BaseTeleOp extends LinearOpMode {
                         gamepad2.rumble(500);
                     } else if (gamepad2.left_bumper && clickTimer.milliseconds() > 500) {
                         clickTimer.reset();
-                        scoreSystemStatus = ScoreSystem.CLAW_HOVER;
+                        scoreSystemStatus = ScoreSystem.HOVER;
                         liftPositionAlreadySet = false;
                         armPositionAlreadSet = false;
                     }
                     break;
-                case DEPOSIT_SPECIMEN:
+                case DEPOSIT:
                     // Set GamePad Colour to yellow if Red Alliance and light purple if Blue Alliance
                     if (alliance == Alliance.RED) {
                         gamepad1.setLedColor(255/255, 229/255, 31/255, 100);

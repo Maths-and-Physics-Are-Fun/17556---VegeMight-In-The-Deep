@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.subSystems;
+package org.firstinspires.ftc.teamcode.common.subsystems;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 
@@ -10,7 +10,7 @@ public class Claw extends SubsystemBase {
     private double clawTargetPosition;
 
     public Claw() {
-        closeClaw();
+        clawClose();
     }
 
     @Override
@@ -26,11 +26,11 @@ public class Claw extends SubsystemBase {
         clawTargetPosition += adjustment;
     }
 
-    public void openClaw() {
+    public void clawOpen() {
         setPosition(Globals.CLAW_OPEN);
     }
 
-    public void closeClaw() {
+    public void clawClose() {
         setPosition(Globals.CLAW_CLOSED);
     }
 

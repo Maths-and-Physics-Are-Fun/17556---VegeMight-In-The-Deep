@@ -1,31 +1,26 @@
 package org.firstinspires.ftc.teamcode.common;
 
-import androidx.annotation.GuardedBy;
-
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.ServoEx;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
-import org.firstinspires.ftc.teamcode.common.subSystems.Arm;
-import org.firstinspires.ftc.teamcode.common.subSystems.Claw;
-import org.firstinspires.ftc.teamcode.common.subSystems.Lift;
-import org.firstinspires.ftc.teamcode.common.subSystems.Wrist;
+import org.firstinspires.ftc.teamcode.common.statuses.ScoreSystem;
+import org.firstinspires.ftc.teamcode.common.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.common.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.common.subsystems.Wrist;
 
 @Config
 public class HardwareReference {
     private static HardwareReference instance = null;
     private HardwareMap hardwareMap;
+
+    public ScoreSystem currentStatus = ScoreSystem.IDLE;
 
     public Gamepad gamepad1;
     public Gamepad gamepad2;
@@ -59,8 +54,10 @@ public class HardwareReference {
         return instance;
     }
 
-    public void initHardware(final HardwareMap hardwareMap) {
+    public void initHardware(final HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2) {
         this.hardwareMap = hardwareMap;
+        this.gamepad1 = gamepad1;
+        this.gamepad2 = gamepad2;
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");

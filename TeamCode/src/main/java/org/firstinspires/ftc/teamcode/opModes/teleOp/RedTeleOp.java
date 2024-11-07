@@ -3,9 +3,14 @@ package org.firstinspires.ftc.teamcode.opModes.teleOp;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp (name="🟥 Red TeleOp")
-public class RedTeleOp extends BaseTeleOp {
+public class RedTeleOp extends BaseTeleOpFTCLib {
     @Override
-    public void runOpMode() throws InterruptedException {
-        super.runOpMode();
+    public void initalize() throws InterruptedException {
+        super.initialize();
+    }
+
+    @Override
+    public void run() {
+        super.run();
     }
 }
