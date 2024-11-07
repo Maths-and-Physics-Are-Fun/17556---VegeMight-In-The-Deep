@@ -7,25 +7,40 @@ import org.firstinspires.ftc.teamcode.common.constants.Globals;
 
 public class Arm extends SubsystemBase {
     private final HardwareReference hardware = HardwareReference.getInstance();
+    private double armTargetPosition = 0;
 
-    public Arm() {}
+    public Arm() {
+        armIdle();
+    }
 
     @Override
     public void periodic() {
-        hardware.leftArm.setPosition(hardware.armTargetPosition);
-        hardware.rightArm.setPosition(hardware.armTargetPosition);
+        hardware.leftArm.setPosition(armTargetPosition);
+        hardware.rightArm.setPosition(armTargetPosition);
     }
 
-    public void setPosition(double position) {
-        hardware.armTargetPosition = position;
+    private void setPosition(double position) {
+        armTargetPosition = position;
     }
 
     public void adjustPosition(double adjustment) {
-        hardware.armTargetPosition += adjustment;
+        armTargetPosition += adjustment;
     }
 
     public void armIdle() {
-        setToPosition(Globals.ARM_IDLE);
+        setPosition(Globals.ARM_IDLE);
+    }
+
+    public void armHover() {
+        setPosition(Globals.ARM_HOVER);
+    }
+
+    public void armPickup() {
+        setPosition(Globals.ARM_PICKUP);
+    }
+
+    public void armDeposit() {
+        setPosition(Globals.ARM_DEPOSIT);
     }
 
 }

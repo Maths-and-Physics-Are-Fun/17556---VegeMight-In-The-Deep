@@ -17,6 +17,10 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.RobotHardware;
+import org.firstinspires.ftc.teamcode.common.subSystems.Arm;
+import org.firstinspires.ftc.teamcode.common.subSystems.Claw;
+import org.firstinspires.ftc.teamcode.common.subSystems.Lift;
+import org.firstinspires.ftc.teamcode.common.subSystems.Wrist;
 
 @Config
 public class HardwareReference {
@@ -34,8 +38,8 @@ public class HardwareReference {
     public MotorEx backRightMotor;
     public MecanumDrive drivetrain;
 
-    MotorEx leftSpool;
-    MotorEx rightSpool;
+    public MotorEx leftSpool;
+    public MotorEx rightSpool;
 
 
     public ServoEx wristServo;
@@ -43,6 +47,11 @@ public class HardwareReference {
 
     public ServoEx leftArm;
     public ServoEx rightArm;
+
+    public Claw claw;
+    public Wrist wrist;
+    public Arm arm;
+    public Lift lift;
 
 
     public static HardwareReference getInstance() {
@@ -75,6 +84,8 @@ public class HardwareReference {
         // Retrieve the spool motors and configure them
         leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_312);
         rightSpool = new MotorEx(hardwareMap, "RightSpool", MotorEx.GoBILDA.RPM_312);
+        leftSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+        rightSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
         rightSpool.setInverted(true);
 
         // Reset spool motor encoders
@@ -89,6 +100,12 @@ public class HardwareReference {
         leftArm = hardwareMap.get(ServoEx.class, "leftarm");
         leftArm = hardwareMap.get(ServoEx.class, "rightarm");
         rightArm.setInverted(true);
+
+        // Subsystems
+        claw = new Claw();
+        wrist = new Wrist();
+        arm = new Arm();
+        lift = new Lift();
 
     }
 

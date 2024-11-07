@@ -7,19 +7,31 @@ import org.firstinspires.ftc.teamcode.common.constants.Globals;
 
 public class Wrist extends SubsystemBase {
     private final HardwareReference hardware = HardwareReference.getInstance();
+    private double wristTargetPosition;
 
-    public Wrist() {}
+    public Wrist() {
+        wristIdle();
+    }
 
-    public void setToPosition(double position) {
-        hardware.wristServo.setPosition(position);
+    @Override
+    public void periodic() {
+        hardware.wristServo.setPosition(wristTargetPosition);
+    }
+
+    private void setPosition(double position) {
+        wristTargetPosition = position;
+    }
+
+    public void adjustPosition(double adjustment) {
+        wristTargetPosition += adjustment;
     }
 
     public void wristPickUp() {
-        setToPosition(Globals.WRIST_PICKUP);
+        setPosition(Globals.WRIST_PICKUP);
     }
 
     public void wristIdle() {
-        setToPosition(Globals.WRIST_IDLE);
+        setPosition(Globals.WRIST_IDLE);
     }
 
 }
