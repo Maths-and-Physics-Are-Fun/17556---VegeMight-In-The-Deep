@@ -23,6 +23,9 @@ public class Wrist extends SubsystemBase {
     }
 
     public void adjustPosition(double adjustment) {
+        if ((wristTargetPosition + adjustment) < 0 || (wristTargetPosition + adjustment) > 1) {
+            adjustment = 0;
+        }
         wristTargetPosition += adjustment;
     }
 
@@ -33,5 +36,10 @@ public class Wrist extends SubsystemBase {
     public void wristIdle() {
         setPosition(Globals.WRIST_IDLE);
     }
+
+    public void wristDeposit() {
+        setPosition(Globals.WRIST_DEPOSIT);
+    }
+
 
 }

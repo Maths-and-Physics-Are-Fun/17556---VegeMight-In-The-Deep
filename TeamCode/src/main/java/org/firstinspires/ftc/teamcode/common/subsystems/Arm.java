@@ -8,6 +8,9 @@ import org.firstinspires.ftc.teamcode.common.constants.Globals;
 public class Arm extends SubsystemBase {
     private final HardwareReference hardware = HardwareReference.getInstance();
     private double armTargetPosition = 0;
+    private double armMiniTargetPosition = 0;
+    private boolean targetPositionChanged = true;
+    private double increment;
 
     public Arm() {
         armIdle();
@@ -21,10 +24,12 @@ public class Arm extends SubsystemBase {
 
     private void setPosition(double position) {
         armTargetPosition = position;
+        targetPositionChanged = true;
     }
 
     public void adjustPosition(double adjustment) {
         armTargetPosition += adjustment;
+        targetPositionChanged = true;
     }
 
     public void armIdle() {

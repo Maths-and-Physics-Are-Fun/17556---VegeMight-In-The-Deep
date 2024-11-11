@@ -4,12 +4,10 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 
-public class AdjustLift extends InstantCommand {
-
-    public AdjustLift() {
+public class AdjustWristUp extends InstantCommand {
+    public AdjustWristUp() {
         super(
-                () -> HardwareReference.getInstance().lift.adjustPosition((int) HardwareReference.getInstance().gamepad2.left_stick_y * 15)
+                () -> HardwareReference.getInstance().wrist.adjustPosition(0.01)
         );
     }
-
 }

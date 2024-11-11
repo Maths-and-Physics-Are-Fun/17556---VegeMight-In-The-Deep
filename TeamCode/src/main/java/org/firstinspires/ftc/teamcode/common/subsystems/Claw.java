@@ -4,6 +4,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 import org.firstinspires.ftc.teamcode.common.constants.Globals;
+import org.firstinspires.ftc.teamcode.common.statuses.ClawStatus;
 
 public class Claw extends SubsystemBase {
     private final HardwareReference hardware = HardwareReference.getInstance();
@@ -28,10 +29,12 @@ public class Claw extends SubsystemBase {
 
     public void clawOpen() {
         setPosition(Globals.CLAW_OPEN);
+        hardware.clawStatus = ClawStatus.OPEN;
     }
 
     public void clawClose() {
         setPosition(Globals.CLAW_CLOSED);
+        hardware.clawStatus = ClawStatus.CLOSED;
     }
 
 }

@@ -8,7 +8,7 @@ public class AdjustArm extends InstantCommand {
 
     public AdjustArm() {
         super(
-                () -> HardwareReference.getInstance().arm.adjustPosition((float) HardwareReference.getInstance().gamepad2.right_stick_y*0.01)
+                () -> HardwareReference.getInstance().arm.adjustPosition((double) HardwareReference.getInstance().gamepad2.right_stick_y*0.01)
         );
     }
 

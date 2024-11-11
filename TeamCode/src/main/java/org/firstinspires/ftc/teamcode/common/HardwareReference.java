@@ -3,12 +3,14 @@ package org.firstinspires.ftc.teamcode.common;
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.ServoEx;
+import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
+import org.firstinspires.ftc.teamcode.common.statuses.ClawStatus;
 import org.firstinspires.ftc.teamcode.common.statuses.ScoreSystem;
 import org.firstinspires.ftc.teamcode.common.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
@@ -21,6 +23,7 @@ public class HardwareReference {
     private HardwareMap hardwareMap;
 
     public ScoreSystem currentStatus = ScoreSystem.IDLE;
+    public ClawStatus clawStatus;
 
     public Gamepad gamepad1;
     public Gamepad gamepad2;
@@ -76,7 +79,7 @@ public class HardwareReference {
         frontLeftMotor.setInverted(true);
         backLeftMotor.setInverted(true);
 
-        drivetrain = new MecanumDrive(frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
+        drivetrain = new MecanumDrive(false, frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
 
         // Retrieve the spool motors and configure them
         leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_312);
@@ -90,12 +93,12 @@ public class HardwareReference {
         rightSpool.stopAndResetEncoder();
 
         //Claw Servos
-        wristServo = hardwareMap.get(ServoEx.class, "clawRot");
-        clawServo = hardwareMap.get(ServoEx.class, "clawGrip");
+        wristServo = new SimpleServo(hardwareMap, "clawRot", 0, 270);
+        clawServo = new SimpleServo(hardwareMap, "clawGrip", 0, 270);
 
         //Arm Servos
-        leftArm = hardwareMap.get(ServoEx.class, "leftarm");
-        leftArm = hardwareMap.get(ServoEx.class, "rightarm");
+        leftArm = new SimpleServo(hardwareMap, "leftarm", 0, 270);
+        rightArm = new SimpleServo(hardwareMap, "rightarm", 0, 270);
         rightArm.setInverted(true);
 
         // Subsystems
