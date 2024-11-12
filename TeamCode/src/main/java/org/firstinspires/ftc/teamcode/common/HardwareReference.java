@@ -1,9 +1,11 @@
 package org.firstinspires.ftc.teamcode.common;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -86,7 +88,7 @@ public class HardwareReference {
         rightSpool = new MotorEx(hardwareMap, "RightSpool", MotorEx.GoBILDA.RPM_312);
         leftSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
         rightSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-        rightSpool.setInverted(true);
+        leftSpool.setInverted(true);
 
         // Reset spool motor encoders
         leftSpool.stopAndResetEncoder();

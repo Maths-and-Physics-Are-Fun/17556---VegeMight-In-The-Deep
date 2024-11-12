@@ -56,7 +56,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
     @Override
     public void run() {
         // Robot-centric driving
-        hardware.drivetrain.driveRobotCentric(gamepad1.right_stick_x*1.1, -gamepad1.right_stick_y, gamepad1.left_stick_x, true);
+        hardware.drivetrain.driveRobotCentric(gamepad1.left_stick_x*1.1, -gamepad1.left_stick_y, gamepad1.right_stick_x, true);
 
         // Run adjustments
         CommandScheduler.getInstance().schedule(new InstantCommand(
@@ -66,13 +66,17 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
                 () -> HardwareReference.getInstance().lift.adjustPosition((int) gamepad2.left_stick_y*15)
         ));
 
+        CommandScheduler.getInstance().schedule(new InstantCommand(() -> hardware.arm.manageSpeed()));
+
         // Run the singleton command scheduler
         CommandScheduler.getInstance().run();
 
         // Telemetry
+        telemetry.addData("Current Status", hardware.currentStatus);
         telemetry.addData("ArmPos", hardware.leftArm.getPosition());
         telemetry.addData("WristPos", hardware.wristServo.getPosition());
         telemetry.addData("LiftPos", hardware.leftSpool.getCurrentPosition());
+        telemetry.addData("IterationsPassed", hardware.arm.getIteration());
         telemetry.update();
     }
 

@@ -24,7 +24,7 @@ public class goForwardInScoringStages extends SelectCommand {
                 new HashMap<Object, Command>() {{
                     put(ScoreSystem.IDLE, new Deposit());
                     put(ScoreSystem.HOVER, new Grab().alongWith(new Rumble()));
-                    put(ScoreSystem.GRAB, new HoverAfterGrab());
+                    put(ScoreSystem.GRAB, new HoverAfterGrab().alongWith(new Rumble()));
                     put(ScoreSystem.HOVERAFTERGRAB, new Idle());
                     Wait wait;
                     put(ScoreSystem.DEPOSIT, new SequentialCommandGroup(

@@ -1,8 +1,10 @@
 package org.firstinspires.ftc.teamcode.common.subsystems;
 
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 import org.firstinspires.ftc.teamcode.common.constants.Globals;
 
@@ -16,6 +18,7 @@ public class Lift extends SubsystemBase {
     public Lift() {
         liftLow();
         positionAlreadySet = false;
+        CommandScheduler.getInstance().registerSubsystem(this);
     }
 
     @Override
@@ -26,9 +29,9 @@ public class Lift extends SubsystemBase {
             this.adjustment = 0;
             positionAlreadySet = false;
         }
-        if (!positionAlreadySet) {
+        if (!positionAlreadySet && (((hardware.leftSpool.motorEx.getCurrent(CurrentUnit.AMPS)) < 1) || (hardware.rightSpool.motorEx.getCurrent(CurrentUnit.AMPS)) < 1)) {
             if (targetLiftPosition < -50) targetLiftPosition = -50;
-            else if (targetLiftPosition > 2000) targetLiftPosition = 2000;
+            else if (targetLiftPosition > 2100) targetLiftPosition = 2100;
             hardware.leftSpool.setTargetPosition(targetLiftPosition);
             hardware.rightSpool.setTargetPosition(targetLiftPosition);
             hardware.leftSpool.setRunMode(MotorEx.RunMode.PositionControl);
@@ -39,10 +42,11 @@ public class Lift extends SubsystemBase {
             hardware.rightSpool.setVelocity(Math.min(velocity, 50));
             positionAlreadySet = true;
         } else {
-            if (targetLiftPosition - 10 < hardware.leftSpool.getCurrentPosition() && hardware.leftSpool.getCurrentPosition() < targetLiftPosition + 10) {
-                hardware.leftSpool.stopMotor();
-                hardware.rightSpool.stopMotor();
-            }
+            if ((targetLiftPosition - 25 < hardware.leftSpool.getCurrentPosition() && hardware.leftSpool.getCurrentPosition() < targetLiftPosition + 25)
+                && (targetLiftPosition < 1800)) {
+                hardware.leftSpool.set(0);
+                hardware.rightSpool.set(0);
+            } else {positionAlreadySet = false;}
         }
     }
 
@@ -56,6 +60,7 @@ public class Lift extends SubsystemBase {
     }
 
     public void liftLow() {
+        hardware.leftSpool.stopMotor();
         setPosition(Globals.LIFT_LOW);
     }
 

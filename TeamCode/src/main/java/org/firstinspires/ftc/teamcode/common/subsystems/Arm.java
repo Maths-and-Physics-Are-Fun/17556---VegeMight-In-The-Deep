@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.subsystems;
 
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
@@ -10,16 +11,33 @@ public class Arm extends SubsystemBase {
     private double armTargetPosition = 0;
     private double armMiniTargetPosition = 0;
     private boolean targetPositionChanged = true;
-    private double increment;
+    private int iterationsPassed;
 
     public Arm() {
+        CommandScheduler.getInstance().registerSubsystem(this);
         armIdle();
     }
 
     @Override
     public void periodic() {
-        hardware.leftArm.setPosition(armTargetPosition);
-        hardware.rightArm.setPosition(armTargetPosition);
+        hardware.leftArm.setPosition(Math.min(armMiniTargetPosition, armTargetPosition));
+        hardware.rightArm.setPosition(Math.min(armMiniTargetPosition, armTargetPosition));
+    }
+
+    public int getIteration() {
+        return iterationsPassed;
+    }
+
+    public void manageSpeed() {
+        if (targetPositionChanged) {
+            armMiniTargetPosition = hardware.leftArm.getPosition();
+            targetPositionChanged = false;
+            iterationsPassed = 0;
+        }
+        if (iterationsPassed % 50 == 0) {
+            armMiniTargetPosition += 0.1;
+        }
+        iterationsPassed += 1;
     }
 
     private void setPosition(double position) {
