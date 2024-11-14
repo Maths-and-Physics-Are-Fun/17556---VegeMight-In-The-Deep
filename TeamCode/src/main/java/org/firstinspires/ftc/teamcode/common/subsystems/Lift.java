@@ -14,6 +14,8 @@ public class Lift extends SubsystemBase {
     private int targetLiftPosition;
     private int adjustment;
     private boolean positionAlreadySet;
+    int distance;
+    int velocity;
 
     public Lift() {
         liftLow();
@@ -36,10 +38,9 @@ public class Lift extends SubsystemBase {
             hardware.rightSpool.setTargetPosition(targetLiftPosition);
             hardware.leftSpool.setRunMode(MotorEx.RunMode.PositionControl);
             hardware.rightSpool.setRunMode(MotorEx.RunMode.PositionControl);
-            int distance = Math.abs(targetLiftPosition - hardware.leftSpool.getCurrentPosition());
-            int velocity = (distance^2)/200 + 50;
-            hardware.leftSpool.setVelocity(Math.min(velocity, 50)); // in ticks per second
-            hardware.rightSpool.setVelocity(Math.min(velocity, 50));
+            velocity = (distance^2)/200 + 50;
+            hardware.leftSpool.setVelocity(Math.min(velocity, 20)); // in ticks per second
+            hardware.rightSpool.setVelocity(Math.min(velocity, 20));
             positionAlreadySet = true;
         } else {
             if ((targetLiftPosition - 25 < hardware.leftSpool.getCurrentPosition() && hardware.leftSpool.getCurrentPosition() < targetLiftPosition + 25)
@@ -57,6 +58,11 @@ public class Lift extends SubsystemBase {
 
     public void adjustPosition(int adjustment) {
         this.adjustment += adjustment;
+        positionAlreadySet = false;
+    }
+
+    public void updateDistance(int currentPosition) {
+        distance = Math.abs(targetLiftPosition - currentPosition);
     }
 
     public void liftLow() {
