@@ -14,7 +14,7 @@ public class Wait extends CommandBase {
     Timing.Timer timer;
 
     public Wait() {
-        timer = new Timing.Timer(500, TimeUnit.MILLISECONDS);
+        timer = new Timing.Timer(800, TimeUnit.MILLISECONDS);
     }
 
     @Override

@@ -41,5 +41,7 @@ public class Wrist extends SubsystemBase {
         setPosition(Globals.WRIST_DEPOSIT);
     }
 
+    public void wristPark() {setPosition(Globals.WRIST_PARK);}
+
 
 }

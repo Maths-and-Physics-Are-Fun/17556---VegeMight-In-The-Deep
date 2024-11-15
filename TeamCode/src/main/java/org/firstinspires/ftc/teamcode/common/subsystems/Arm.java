@@ -66,4 +66,6 @@ public class Arm extends SubsystemBase {
         setPosition(Globals.ARM_DEPOSIT);
     }
 
+    public void armPark() {setPosition(Globals.ARM_PARK);}
+
 }

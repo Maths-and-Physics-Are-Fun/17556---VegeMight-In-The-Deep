@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.common.commands.highLevel.goForwardInScori
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.AdjustWristDown;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.AdjustWristUp;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Idle;
+import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Park;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.ToggleClaw;
 
 @TeleOp
@@ -36,15 +37,20 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         hardware.initHardware(hardwareMap, gamepad1, gamepad2);
 
         // Bind appropriate commands to buttons
+        // Go forward and backward in intake and deposit statuses
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new goBackwardInScoringStages());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new goForwardInScoringStages());
 
+        // Manual controls
         gamepadEx1.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ToggleClaw());
         gamepadEx2.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ToggleClaw());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.START).whenPressed(new Idle());
         gamepadEx2.getGamepadButton(GamepadKeys.Button.START).whenPressed(new Idle());
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whileHeld(new AdjustWristUp());
         gamepadEx2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whileHeld(new AdjustWristDown());
+
+        // Park touching the bar
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.B).whenPressed(new Park());
 
     }
 
