@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.common;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.hardware.ServoEx;
@@ -54,6 +55,9 @@ public class HardwareReference {
     public Arm arm;
     public Lift lift;
 
+    // AUTO
+    public org.firstinspires.ftc.teamcode.MecanumDrive autoDrive;
+
 
     public static HardwareReference getInstance() {
         if (instance == null) instance = new HardwareReference();
@@ -83,6 +87,7 @@ public class HardwareReference {
         backLeftMotor.setInverted(true);
 
         drivetrain = new MecanumDrive(false, frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
+        autoDrive = new org.firstinspires.ftc.teamcode.MecanumDrive(hardwareMap, new Pose2d(11.27, 59.41, Math.toRadians(270)));
 
         // Retrieve the spool motors and configure them
         leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_312);
@@ -110,6 +115,10 @@ public class HardwareReference {
         arm = new Arm();
         lift = new Lift();
 
+    }
+
+    public void nullify() {
+        instance = null;
     }
 
 }

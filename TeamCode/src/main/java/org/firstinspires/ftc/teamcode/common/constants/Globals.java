@@ -12,7 +12,7 @@ public class Globals {
     public static double CLAW_OPEN = 0.6;
     public static double CLAW_CLOSED = 1;
 
-    public static double ARM_IDLE = 0.025;
+    public static double ARM_IDLE = 0.028;
     public static double ARM_HOVER = 0.5766;
     public static double ARM_PICKUP = 0.6461;
     public static double ARM_DEPOSIT = 0.265;
