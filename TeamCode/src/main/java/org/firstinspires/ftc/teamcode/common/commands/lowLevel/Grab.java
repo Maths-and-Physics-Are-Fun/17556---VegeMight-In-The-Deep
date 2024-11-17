@@ -19,7 +19,7 @@ public class Grab extends SequentialCommandGroup {
             new InstantCommand(() -> HardwareReference.getInstance().wrist.wristPickUp()),
             new InstantCommand(() -> HardwareReference.getInstance().arm.armPickup()),
             new InstantCommand(() -> HardwareReference.getInstance().lift.liftLow()),
-            wait = new Wait(),
+            wait = new Wait(450),
             new WaitUntilCommand(wait::isFinished),
             new InstantCommand(() -> HardwareReference.getInstance().claw.clawClose()),
             new InstantCommand(() -> HardwareReference.getInstance().currentStatus = ScoreSystem.GRAB)

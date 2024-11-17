@@ -22,8 +22,10 @@ import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Deposit;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Idle;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Park;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Wait;
+import org.firstinspires.ftc.teamcode.common.statuses.Alliance;
 
 @Autonomous
+@Disabled
 public class BaseAuto extends LinearOpMode {
 
     private final HardwareReference hardware = HardwareReference.getInstance();
@@ -31,8 +33,9 @@ public class BaseAuto extends LinearOpMode {
     Wait wait;
     DriveToConverter converter = new DriveToConverter();
 
-    private void initialize() {
+    public void initialize() {
         // Initialize the singleton hardware reference
+        Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
         hardware.initHardware(hardwareMap, gamepad1, gamepad2);
     }
 
@@ -45,7 +48,7 @@ public class BaseAuto extends LinearOpMode {
         waitForStart();
 
         // SCORE
-        CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
+        /*CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
                 // Go to scoring position
                 new RRCommand(converter.convertTrajectoryToAction(52.3, 52.91, Math.toRadians(45))),
                 new Deposit(),
@@ -68,7 +71,9 @@ public class BaseAuto extends LinearOpMode {
                 // Touch first rung
                 new Park(),
                 new InstantCommand(this::requestOpModeStop)
-        ));
+        ));*/
+        // Move to the right
+        CommandScheduler.getInstance().schedule(new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x-65, hardware.autoDrive.pose.position.y, hardware.autoDrive.pose.heading.imag, DriveToConverter.MovementType.STRAFE_TO)));
 
         while (opModeIsActive() && !isStopRequested()) {
             CommandScheduler.getInstance().run();

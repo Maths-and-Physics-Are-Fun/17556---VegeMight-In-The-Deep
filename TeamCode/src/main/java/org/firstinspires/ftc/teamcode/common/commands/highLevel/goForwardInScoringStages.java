@@ -29,7 +29,7 @@ public class goForwardInScoringStages extends SelectCommand {
                     Wait wait;
                     put(ScoreSystem.DEPOSIT, new SequentialCommandGroup(
                             new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-                            wait = new Wait(),
+                            wait = new Wait(600),
                             new WaitUntilCommand(wait::isFinished),
                             new Idle()
                     ));
