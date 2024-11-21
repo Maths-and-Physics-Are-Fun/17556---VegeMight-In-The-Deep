@@ -12,7 +12,8 @@ public class DriveToConverter {
         STRAFE_TO,
         LINE_TO_X,
         LINE_TO_Y,
-        SPLINE_TO
+        SPLINE_TO,
+        LINE_TO
     }
 
     public DriveToConverter() {}
@@ -30,6 +31,9 @@ public class DriveToConverter {
                 break;
             case SPLINE_TO:
                 trajActionBuilder = trajActionBuilder.splineTo(new Vector2d(xDest, yDest), heading);
+                break;
+            case LINE_TO:
+                trajActionBuilder = trajActionBuilder.splineToConstantHeading(new Vector2d(xDest, yDest), heading);
                 break;
         }
         Action driveAction = trajActionBuilder.build();

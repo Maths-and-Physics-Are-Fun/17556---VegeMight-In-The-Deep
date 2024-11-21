@@ -4,7 +4,7 @@ public enum ScoreSystem {
     HOVER,
     GRAB,
     HOVERAFTERGRAB,
-    HOLD_SPECIMEN,
+    DEPOSIT_SPECIMEN,
     DEPOSIT,
     IDLE
 }

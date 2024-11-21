@@ -18,7 +18,7 @@ public class Specimen extends CommandBase {
         hardware.wrist.wristDeposit();
         hardware.arm.armDeposit();
         hardware.lift.liftMedium();
-        hardware.currentStatus = ScoreSystem.DEPOSIT;
+        hardware.currentStatus = ScoreSystem.DEPOSIT_SPECIMEN;
     }
 
     @Override
