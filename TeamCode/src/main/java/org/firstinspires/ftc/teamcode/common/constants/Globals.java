@@ -20,4 +20,5 @@ public class Globals {
 
     public static int LIFT_LOW = 0;
     public static int LIFT_HIGH = 2250;
+    public static int LIFT_MEDIUM=1150;
 }
