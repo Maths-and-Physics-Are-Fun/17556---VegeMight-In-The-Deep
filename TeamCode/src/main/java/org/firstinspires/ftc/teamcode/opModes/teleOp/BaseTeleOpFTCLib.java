@@ -11,7 +11,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 import org.firstinspires.ftc.teamcode.common.commands.highLevel.goBackwardInScoringStages;
+import org.firstinspires.ftc.teamcode.common.commands.highLevel.goBackwardInScoringStagesSpecimen;
 import org.firstinspires.ftc.teamcode.common.commands.highLevel.goForwardInScoringStages;
+import org.firstinspires.ftc.teamcode.common.commands.highLevel.goForwardInScoringStagesSpecimen;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.AdjustWristDown;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.AdjustWristUp;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Idle;
@@ -26,6 +28,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
 
     GamepadEx gamepadEx1;
     GamepadEx gamepadEx2;
+    boolean specimen = false;
 
     @Override
     public void initialize() {
@@ -38,10 +41,18 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
 
         // Bind appropriate commands to buttons
         // Go forward and backward in intake and deposit statuses
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new goBackwardInScoringStages());
-        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new goForwardInScoringStages());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> this.specimen=!specimen));
+
+        if (specimen) {
+            gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new goBackwardInScoringStages());
+            gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new goForwardInScoringStages());
+        } else if (!specimen){
+            gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new goBackwardInScoringStagesSpecimen());
+            gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new goForwardInScoringStagesSpecimen());
+        }
 
         // Manual controls
+
         gamepadEx1.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ToggleClaw());
         gamepadEx2.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ToggleClaw());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.START).whenPressed(new Idle());

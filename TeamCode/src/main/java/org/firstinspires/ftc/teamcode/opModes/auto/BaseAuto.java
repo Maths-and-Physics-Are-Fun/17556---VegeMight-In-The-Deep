@@ -53,14 +53,14 @@ public class BaseAuto extends LinearOpMode {
         // SCORE
         CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
                 // Go to specimen scoring position
-                new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x, hardware.autoDrive.pose.position.y-20, Math.toRadians(0), DriveToConverter.MovementType.STRAFE_TO)),
+                new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x, hardware.autoDrive.pose.position.y-20,  Math.toRadians(0), DriveToConverter.MovementType.STRAFE_TO)),
                 wait = new Wait(500),
                 new WaitUntilCommand(wait::isFinished),
                 new Specimen(),
                 wait = new Wait(500),
                 new WaitUntilCommand(wait::isFinished),
                 //Go to sample scoring area
-                new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x+10, hardware.autoDrive.pose.position.y+10, hardware.autoDrive.pose.heading.imag,DriveToConverter.MovementType.LINE_TO)),
+                new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x+10, hardware.autoDrive.pose.position.y+10, hardware.autoDrive.pose.heading.imag,DriveToConverter.MovementType.STRAFE_TO_HEADING)),
                 wait = new Wait(500),
                 new WaitUntilCommand(wait::isFinished),
                 new Idle(),

@@ -5,10 +5,10 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 import org.firstinspires.ftc.teamcode.common.statuses.ScoreSystem;
-public class Specimen extends CommandBase {
+public class HoverSpecimen extends CommandBase {
     HardwareReference hardware;
 
-    public Specimen() {
+    public HoverSpecimen() {
         hardware = HardwareReference.getInstance();
     }
 
@@ -17,9 +17,8 @@ public class Specimen extends CommandBase {
         hardware.claw.clawClose();
         hardware.wrist.wristPickUp();
         hardware.arm.armDeposit();
-        hardware.lift.liftMedium();
-        hardware.currentStatus = ScoreSystem.DEPOSIT_SPECIMEN;
-
+        hardware.lift.liftSpecimen();
+        hardware.currentStatus = ScoreSystem.HOVERSPECIMEN;
     }
 
     @Override
@@ -28,3 +27,4 @@ public class Specimen extends CommandBase {
     }
 
 }
+

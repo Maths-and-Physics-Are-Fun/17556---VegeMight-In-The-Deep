@@ -76,4 +76,5 @@ public class Lift extends SubsystemBase {
     public void liftMedium() {
         setPosition(Globals.LIFT_MEDIUM);
     }
+    public void liftSpecimen() {setPosition(Globals.LIFT_SPECIMEN);}
 }
