@@ -21,6 +21,7 @@ import org.firstinspires.ftc.teamcode.common.RRCommand;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Deposit;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Grab;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Hover;
+import org.firstinspires.ftc.teamcode.common.commands.lowLevel.HoverSpecimenBeforeDeposit;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Idle;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Park;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Specimen;
@@ -53,18 +54,25 @@ public class BaseAuto extends LinearOpMode {
         // SCORE
         CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
                 // Go to specimen scoring position
-                new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x, hardware.autoDrive.pose.position.y-20,  Math.toRadians(0), DriveToConverter.MovementType.STRAFE_TO)),
+                new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x, 30,  Math.toRadians(0), DriveToConverter.MovementType.LINE_TO_Y)),
                 wait = new Wait(500),
                 new WaitUntilCommand(wait::isFinished),
-                new Specimen(),
-                wait = new Wait(500),
+                //new HoverSpecimenBeforeDeposit(),
+                //wait = new Wait(500),
+                //new WaitUntilCommand(wait::isFinished),
+                new RRCommand((converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x, 25, Math.toRadians(0), DriveToConverter.MovementType.SPLINE_TO))),
+                wait = new Wait(300),
                 new WaitUntilCommand(wait::isFinished),
+
+                //new Specimen(),
+                //wait = new Wait(300),
+                //new WaitUntilCommand(wait::isFinished),
                 //Go to sample scoring area
-                new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x+10, hardware.autoDrive.pose.position.y+10, hardware.autoDrive.pose.heading.imag,DriveToConverter.MovementType.STRAFE_TO_HEADING)),
+                /*new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x+10, hardware.autoDrive.pose.position.y+10, hardware.autoDrive.pose.heading.imag,DriveToConverter.MovementType.STRAFE_TO_HEADING)),
                 wait = new Wait(500),
                 new WaitUntilCommand(wait::isFinished),
                 new Idle(),
-                wait = new Wait(500),
+                wait = new Wait(500), */
                 /*
                 //Hover over sample
                 new Hover(),
