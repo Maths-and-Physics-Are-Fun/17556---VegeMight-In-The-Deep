@@ -60,10 +60,49 @@ public class BaseAuto extends LinearOpMode {
                 //new HoverSpecimenBeforeDeposit(),
                 //wait = new Wait(500),
                 //new WaitUntilCommand(wait::isFinished),
-                new RRCommand((converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x, 25, Math.toRadians(0), DriveToConverter.MovementType.SPLINE_TO))),
+                new RRCommand((converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x, 24, Math.toRadians(0), DriveToConverter.MovementType.LINE_TO_Y))),
                 wait = new Wait(300),
                 new WaitUntilCommand(wait::isFinished),
 
+                new RRCommand((converter.convertTrajectoryToAction(-34, 40, Math.toRadians(180), DriveToConverter.MovementType.SPLINE_TO))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
+
+                new RRCommand((converter.convertTrajectoryToAction(-50, 7, Math.toRadians(180), DriveToConverter.MovementType.STRAFE_TO))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
+
+                new RRCommand((converter.convertTrajectoryToAction(-50, -50, Math.toRadians(180), DriveToConverter.MovementType.LINE_TO_Y))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
+
+                new RRCommand((converter.convertTrajectoryToAction(-50, 7, Math.toRadians(180), DriveToConverter.MovementType.LINE_TO_Y))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
+
+                new RRCommand((converter.convertTrajectoryToAction(-60, 7, Math.toRadians(180), DriveToConverter.MovementType.LINE_TO_X))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
+
+                new RRCommand((converter.convertTrajectoryToAction(-60, -50, Math.toRadians(180), DriveToConverter.MovementType.LINE_TO_Y))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
+
+                new RRCommand((converter.convertTrajectoryToAction(-60, -50, Math.toRadians(180), DriveToConverter.MovementType.LINE_TO_Y))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
+
+                new RRCommand((converter.convertTrajectoryToAction(-6, -24, Math.toRadians(0), DriveToConverter.MovementType.LINE_TO_Y))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
+
+                new RRCommand((converter.convertTrajectoryToAction(-60, -50, Math.toRadians(180), DriveToConverter.MovementType.LINE_TO_Y))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
+
+                new RRCommand((converter.convertTrajectoryToAction(-6, -24, Math.toRadians(0), DriveToConverter.MovementType.LINE_TO_Y))),
+                wait = new Wait(300),
+                new WaitUntilCommand(wait::isFinished),
                 //new Specimen(),
                 //wait = new Wait(300),
                 //new WaitUntilCommand(wait::isFinished),
