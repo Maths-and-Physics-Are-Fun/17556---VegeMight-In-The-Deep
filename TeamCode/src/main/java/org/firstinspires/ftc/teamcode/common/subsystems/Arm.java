@@ -68,4 +68,6 @@ public class Arm extends SubsystemBase {
 
     public void armPark() {setPosition(Globals.ARM_PARK);}
 
+    public void armSpecimenPickUp() {setPosition(Globals.ARM_SPECIMEN_PICKUP);}
+
 }

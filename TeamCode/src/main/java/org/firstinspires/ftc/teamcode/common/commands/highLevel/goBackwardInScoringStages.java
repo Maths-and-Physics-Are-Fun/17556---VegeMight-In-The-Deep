@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.commands.highLevel;
 
 import com.arcrobotics.ftclib.command.Command;
-import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.SelectCommand;
 
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
@@ -20,7 +19,7 @@ public class goBackwardInScoringStages extends SelectCommand {
                     put(ScoreSystem.IDLE, new Hover());
                     put(ScoreSystem.HOVER, new Idle());
                     put(ScoreSystem.GRAB, new Hover());
-                    put(ScoreSystem.HOVERAFTERGRAB, new Grab());
+                    put(ScoreSystem.HOVER_AFTER_GRAB, new Grab());
                     put(ScoreSystem.DEPOSIT, new Idle());
                 }},
             () -> HardwareReference.getInstance().currentStatus

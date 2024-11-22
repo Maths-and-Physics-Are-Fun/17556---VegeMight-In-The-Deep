@@ -36,6 +36,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
 
+
         // Initialize the singleton hardware reference
         hardware.initHardware(hardwareMap, gamepad1, gamepad2);
 
@@ -43,13 +44,8 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         // Go forward and backward in intake and deposit statuses
         gamepadEx1.getGamepadButton(GamepadKeys.Button.DPAD_LEFT).whenPressed(new InstantCommand(() -> this.specimen=!specimen));
 
-        if (specimen) {
-            gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new goBackwardInScoringStages());
-            gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new goForwardInScoringStages());
-        } else if (!specimen){
-            gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new goBackwardInScoringStagesSpecimen());
-            gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new goForwardInScoringStagesSpecimen());
-        }
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ConditionalCommand(new goBackwardInScoringStages(), new goBackwardInScoringStagesSpecimen(), () -> !specimen));
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new ConditionalCommand(new goForwardInScoringStages(), new goForwardInScoringStagesSpecimen(), ()-> !specimen));
 
         // Manual controls
 
@@ -98,6 +94,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         telemetry.addData("LiftPos", hardware.leftSpool.getCurrentPosition());
         telemetry.addData("LiftVelo", hardware.leftSpool.getVelocity());
         telemetry.addData("IterationsPassed", hardware.arm.getIteration());
+        telemetry.addData("Specimen",specimen);
         telemetry.update();
     }
 

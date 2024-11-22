@@ -25,7 +25,7 @@ public class goForwardInScoringStages extends SelectCommand {
                     put(ScoreSystem.IDLE, new Deposit());
                     put(ScoreSystem.HOVER, new Grab().alongWith(new Rumble()));
                     put(ScoreSystem.GRAB, new HoverAfterGrab().alongWith(new Rumble()));
-                    put(ScoreSystem.HOVERAFTERGRAB, new Idle());
+                    put(ScoreSystem.HOVER_AFTER_GRAB, new Idle());
                     Wait wait;
                     put(ScoreSystem.DEPOSIT, new SequentialCommandGroup(
                             new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),

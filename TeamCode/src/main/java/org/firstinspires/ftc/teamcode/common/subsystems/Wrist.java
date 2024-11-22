@@ -43,5 +43,9 @@ public class Wrist extends SubsystemBase {
 
     public void wristPark() {setPosition(Globals.WRIST_PARK);}
 
+    public void wristSpecimenPickUp() {setPosition(Globals.WRIST_SPECIMEN_PICKUP);}
+
+    public void wristSpecimenDeposit() {setPosition(Globals.WRIST_SPECIMEN_DEPOSIT);}
+
 
 }
