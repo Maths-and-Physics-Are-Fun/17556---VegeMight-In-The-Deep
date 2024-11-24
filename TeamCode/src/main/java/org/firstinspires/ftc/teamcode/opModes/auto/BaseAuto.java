@@ -36,7 +36,7 @@ public class BaseAuto extends LinearOpMode {
     private MecanumDrive drive;
     Wait wait;
     DriveToConverter converter = new DriveToConverter();
-
+    String fancytitle = " ";
     public void initialize() {
         // Initialize the singleton hardware reference
         Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
@@ -145,15 +145,28 @@ public class BaseAuto extends LinearOpMode {
                 new InstantCommand(this::requestOpModeStop)
         ));
 
-
+        telemetry.addData("::::::::::::::::::::::::::::::::::::", fancytitle);
+        telemetry.addData(":    :::::::::::::::::::::::::    ::", fancytitle);
+        telemetry.addData("::    :::::::::::::::::::::::    :::", fancytitle);
+        telemetry.addData(":::    :::::::::::::::::::::    ::::", fancytitle);
+        telemetry.addData("::::    :::::::::::::::::::    :::::", fancytitle);
+        telemetry.addData(":::::    :::::::::::::::::    ::::::", fancytitle);
+        telemetry.addData("::::::    :::::::::::::::    :::::::", fancytitle);
+        telemetry.addData(":::::::    :::::::::::::    ::::::::", fancytitle);
+        telemetry.addData("::::::::    :::::::::::    :::::::::", fancytitle);
+        telemetry.addData(":::::::::    :::::::::    ::::::::::", fancytitle);
+        telemetry.addData("::::::::::    :::::::    :::::::::::", fancytitle);
+        telemetry.addData(":::::::::::    :::::    ::::::::::::", fancytitle);
+        telemetry.addData("::::::::::::    :::    :::::::::::::", fancytitle);
+        telemetry.addData(":::::::::::::    :    ::::::::::::::", fancytitle);
+        telemetry.addData("::::::::::::::       :::::::::::::::", fancytitle);
+        telemetry.addData("::::::::::::::::::::::::::::::::::::", fancytitle);
         // Move to the right
         //CommandScheduler.getInstance().schedule(new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x-65, hardware.autoDrive.pose.position.y, hardware.autoDrive.pose.heading.imag, DriveToConverter.MovementType.STRAFE_TO)));
-
         while (opModeIsActive() && !isStopRequested()) {
             CommandScheduler.getInstance().run();
             telemetry.update();
         }
-
         // Make the hardware instance null after one run-through of the auto to stop it from looping
         hardware.nullify();
         this.requestOpModeStop();
