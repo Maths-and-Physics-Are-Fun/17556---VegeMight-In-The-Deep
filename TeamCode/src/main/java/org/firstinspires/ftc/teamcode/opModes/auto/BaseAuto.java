@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.opModes.auto;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -37,6 +38,7 @@ public class BaseAuto extends LinearOpMode {
     Wait wait;
     DriveToConverter converter = new DriveToConverter();
     String fancytitle = " ";
+    int letter = 0;
     public void initialize() {
         // Initialize the singleton hardware reference
         Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
@@ -52,6 +54,26 @@ public class BaseAuto extends LinearOpMode {
         waitForStart();
 
         // SCORE
+        CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
+                new InstantCommand(() -> letter=0),
+                wait = new Wait(3000),
+                new InstantCommand(() -> letter=1),
+                wait = new Wait(3000),
+                new InstantCommand(()->letter=2),
+                wait = new Wait(3000),
+                new InstantCommand(() -> letter=3),
+                wait = new Wait(3000),
+                new InstantCommand(() -> letter=4),
+                wait = new Wait(3000),
+                new InstantCommand(()->letter=5),
+                wait = new Wait(3000),
+                new InstantCommand(() -> letter=6),
+                wait = new Wait(3000),
+                new InstantCommand(() -> letter=7),
+                wait = new Wait(3000),
+                new InstantCommand(()->letter=8),
+                wait = new Wait(3000)
+        ));
         CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
                 // Go to specimen scoring position
                 new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x, 30,  Math.toRadians(-90), DriveToConverter.MovementType.LINE_TO_Y)),
@@ -144,25 +166,99 @@ public class BaseAuto extends LinearOpMode {
                  */
                 new InstantCommand(this::requestOpModeStop)
         ));
+        //Cool VegeMight V :D
+        if (letter==0) {
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::     :", fancytitle);
+            telemetry.addData("::     :::::::::::::::::::::     ::", fancytitle);
+            telemetry.addData(":::     :::::::::::::::::::     :::", fancytitle);
+            telemetry.addData("::::     :::::::::::::::::     ::::", fancytitle);
+            telemetry.addData(":::::     :::::::::::::::     :::::", fancytitle);
+            telemetry.addData("::::::     :::::::::::::     ::::::", fancytitle);
+            telemetry.addData(":::::::     :::::::::::     :::::::", fancytitle);
+            telemetry.addData("::::::::     :::::::::     ::::::::", fancytitle);
+            telemetry.addData(":::::::::     :::::::     :::::::::", fancytitle);
+            telemetry.addData("::::::::::     :::::     ::::::::::", fancytitle);
+            telemetry.addData(":::::::::::     :::     :::::::::::", fancytitle);
+            telemetry.addData("::::::::::::     :     ::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::         :::::::::::::", fancytitle);
+            telemetry.addData("::::::::::::::       ::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+        } else if (letter == 1|| letter == 3) {
+            //Cool VegeMight E
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":                                 :", fancytitle);
+            telemetry.addData(":                                 :", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":                                 :", fancytitle);
+            telemetry.addData(":                                 :", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":                                 :", fancytitle);
+            telemetry.addData(":                                 :", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+        } else if (letter==2) {
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData("::::::                       ::::::", fancytitle);
+            telemetry.addData(":::       ::::::::::::::::       ::", fancytitle);
+            telemetry.addData(":::      ::::::::::::::::::::     :", fancytitle);
+            telemetry.addData("::      :::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData("::      :::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":      ::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":      ::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":      ::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":      ::::::::::::::         :::::", fancytitle);
+            telemetry.addData("::      :::::::::::::           :::", fancytitle);
+            telemetry.addData("::      ::::::::::::::::::       ::", fancytitle);
+            telemetry.addData(":::      :::::::::::::::::       ::", fancytitle);
+            telemetry.addData(":::       ::::::::::::::::       ::", fancytitle);
+            telemetry.addData("::::::                       ::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+        } else if (letter == 4) {
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::     :", fancytitle);
+            telemetry.addData(":      :::::::::::::::::::::      :", fancytitle);
+            telemetry.addData(":       :::::::::::::::::::       :", fancytitle);
+            telemetry.addData(":        :::::::::::::::::        :", fancytitle);
+            telemetry.addData(":         :::::::::::::::         :", fancytitle);
+            telemetry.addData(":          :::::::::::::          :", fancytitle);
+            telemetry.addData(":     :     :::::::::::     :     :", fancytitle);
+            telemetry.addData(":     ::     :::::::::     ::     :", fancytitle);
+            telemetry.addData(":     :::     :::::::     :::     :", fancytitle);
+            telemetry.addData(":     ::::     :::::     ::::     :", fancytitle);
+            telemetry.addData(":     :::::     :::     :::::     :", fancytitle);
+            telemetry.addData(":     ::::::     :     ::::::     :", fancytitle);
+            telemetry.addData(":     :::::::         :::::::     :", fancytitle);
+            telemetry.addData(":     :::::::::::::::::::::::     :", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+        } else if (letter == 5) {
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+        }
+        //
 
-        telemetry.addData("::::::::::::::::::::::::::::::::::::", fancytitle);
-        telemetry.addData(":    :::::::::::::::::::::::::    ::", fancytitle);
-        telemetry.addData("::    :::::::::::::::::::::::    :::", fancytitle);
-        telemetry.addData(":::    :::::::::::::::::::::    ::::", fancytitle);
-        telemetry.addData("::::    :::::::::::::::::::    :::::", fancytitle);
-        telemetry.addData(":::::    :::::::::::::::::    ::::::", fancytitle);
-        telemetry.addData("::::::    :::::::::::::::    :::::::", fancytitle);
-        telemetry.addData(":::::::    :::::::::::::    ::::::::", fancytitle);
-        telemetry.addData("::::::::    :::::::::::    :::::::::", fancytitle);
-        telemetry.addData(":::::::::    :::::::::    ::::::::::", fancytitle);
-        telemetry.addData("::::::::::    :::::::    :::::::::::", fancytitle);
-        telemetry.addData(":::::::::::    :::::    ::::::::::::", fancytitle);
-        telemetry.addData("::::::::::::    :::    :::::::::::::", fancytitle);
-        telemetry.addData(":::::::::::::    :    ::::::::::::::", fancytitle);
-        telemetry.addData("::::::::::::::       :::::::::::::::", fancytitle);
-        telemetry.addData("::::::::::::::::::::::::::::::::::::", fancytitle);
         // Move to the right
         //CommandScheduler.getInstance().schedule(new RRCommand(converter.convertTrajectoryToAction(hardware.autoDrive.pose.position.x-65, hardware.autoDrive.pose.position.y, hardware.autoDrive.pose.heading.imag, DriveToConverter.MovementType.STRAFE_TO)));
+
         while (opModeIsActive() && !isStopRequested()) {
             CommandScheduler.getInstance().run();
             telemetry.update();
