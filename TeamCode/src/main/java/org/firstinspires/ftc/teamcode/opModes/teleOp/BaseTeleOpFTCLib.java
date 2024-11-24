@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.opModes.teleOp;
 
+import androidx.annotation.NonNull;
+
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
@@ -31,6 +33,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
     GamepadEx gamepadEx1;
     GamepadEx gamepadEx2;
     boolean specimen = false;
+    String fancytitle = " ";
 
     @Override
     public void initialize() {
@@ -92,14 +95,32 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         // Run the singleton command scheduler
         CommandScheduler.getInstance().run();
 
-        // Telemetry
+        //States Telemetry
+        telemetry.addData("States", fancytitle);
         telemetry.addData("Current Status", hardware.currentStatus);
-        telemetry.addData("ArmPos", hardware.leftArm.getPosition());
-        telemetry.addData("WristPos", hardware.wristServo.getPosition());
-        telemetry.addData("LiftPos", hardware.leftSpool.getCurrentPosition());
-        telemetry.addData("LiftVelo", hardware.leftSpool.getVelocity());
-        telemetry.addData("IterationsPassed", hardware.arm.getIteration());
         telemetry.addData("Specimen",specimen);
+        telemetry.addData("ClawRotationState", (hardware.clawrotServo.getPosition())/0.25);
+        telemetry.addData("", fancytitle);
+        //Positions Telemetry
+        telemetry.addData("Current Positions", fancytitle);
+        telemetry.addData("Arm Position", hardware.leftArm.getPosition());
+        telemetry.addData("Wrist Position", hardware.wristServo.getPosition());
+        telemetry.addData("Lift Position", hardware.leftSpool.getCurrentPosition());
+        telemetry.addData("Claw Rotation Position", hardware.clawrotServo.getPosition());
+        telemetry.addData("", fancytitle);
+        //Other Telemetry
+        telemetry.addData("Others", fancytitle);
+        telemetry.addData("LiftVelo", hardware.leftSpool.getVelocity());
+
+        //Trademark
+        telemetry.addData("", fancytitle);
+        telemetry.addData("", fancytitle);
+        telemetry.addData("", fancytitle);
+        telemetry.addData("", fancytitle);
+        telemetry.addData("", fancytitle);
+        telemetry.addData("", fancytitle);
+        telemetry.addData("VegeMight ©", fancytitle);
+
         telemetry.update();
     }
 

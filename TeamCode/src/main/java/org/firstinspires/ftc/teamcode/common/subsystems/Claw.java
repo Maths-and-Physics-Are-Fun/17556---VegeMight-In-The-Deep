@@ -46,6 +46,6 @@ public class Claw extends SubsystemBase {
         clawRotationState=clawRotationState+stage;
 
         clawRotationTargetPosition = clawRotationState*0.25;
-        setPosition(clawRotationTargetPosition);
+        hardware.clawrotServo.setPosition(clawTargetPosition);
     }
 }
