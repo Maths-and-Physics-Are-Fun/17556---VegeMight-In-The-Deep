@@ -9,6 +9,8 @@ import org.firstinspires.ftc.teamcode.common.statuses.ClawStatus;
 public class Claw extends SubsystemBase {
     private final HardwareReference hardware = HardwareReference.getInstance();
     private double clawTargetPosition;
+    private double clawRotationTargetPosition;
+    private double clawRotationState;
 
     public Claw() {
         clawClose();
@@ -37,4 +39,13 @@ public class Claw extends SubsystemBase {
         hardware.clawStatus = ClawStatus.CLOSED;
     }
 
+    public void clawRotate(double stage) {
+        if (clawRotationState+stage>5 || clawRotationState+stage<0) {
+            clawRotationState = clawRotationState+0;
+        }
+        clawRotationState=clawRotationState+stage;
+
+        clawRotationTargetPosition = clawRotationState*0.25;
+        setPosition(clawRotationTargetPosition);
+    }
 }

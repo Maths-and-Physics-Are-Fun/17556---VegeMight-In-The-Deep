@@ -101,9 +101,9 @@ public class HardwareReference {
         rightSpool.stopAndResetEncoder();
 
         //Claw Servos
-        wristServo = new SimpleServo(hardwareMap, "clawRot", 0, 270);
+        wristServo = new SimpleServo(hardwareMap, "wristRot", 0, 270);
         clawServo = new SimpleServo(hardwareMap, "clawGrip", 0, 270);
-
+        wristServo = new SimpleServo(hardwareMap, "clawRot", 0, 180);
         //Arm Servos
         leftArm = new SimpleServo(hardwareMap, "leftarm", 0, 270);
         rightArm = new SimpleServo(hardwareMap, "rightarm", 0, 270);

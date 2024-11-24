@@ -14,6 +14,8 @@ import org.firstinspires.ftc.teamcode.common.commands.highLevel.goBackwardInScor
 import org.firstinspires.ftc.teamcode.common.commands.highLevel.goBackwardInScoringStagesSpecimen;
 import org.firstinspires.ftc.teamcode.common.commands.highLevel.goForwardInScoringStages;
 import org.firstinspires.ftc.teamcode.common.commands.highLevel.goForwardInScoringStagesSpecimen;
+import org.firstinspires.ftc.teamcode.common.commands.lowLevel.AdjustClawRotation;
+import org.firstinspires.ftc.teamcode.common.commands.lowLevel.AdjustClawRotationBack;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.AdjustWristDown;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.AdjustWristUp;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Idle;
@@ -47,6 +49,9 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ConditionalCommand(new goBackwardInScoringStages(), new goBackwardInScoringStagesSpecimen(), () -> !specimen));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new ConditionalCommand(new goForwardInScoringStages(), new goForwardInScoringStagesSpecimen(), ()-> !specimen));
 
+        //Claw Rotation
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new AdjustClawRotation());
+        gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new AdjustClawRotationBack());
         // Manual controls
 
         gamepadEx1.getGamepadButton(GamepadKeys.Button.BACK).whenPressed(new ToggleClaw());
