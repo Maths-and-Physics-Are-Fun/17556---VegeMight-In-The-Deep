@@ -92,15 +92,15 @@ public class BaseAuto extends LinearOpMode {
                 wait = new Wait(300),
                 new WaitUntilCommand(wait::isFinished),
 
-                new RRCommand((converter.convertTrajectoryToAction(-6, -24, Math.toRadians(-90), DriveToConverter.MovementType.LINE_TO_Y))),
+                new RRCommand((converter.convertTrajectoryToAction(-6, -24, Math.toRadians(-90), DriveToConverter.MovementType.SPLINE_TO))),
                 wait = new Wait(300),
                 new WaitUntilCommand(wait::isFinished),
 
-                new RRCommand((converter.convertTrajectoryToAction(-60, -50, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_Y))),
+                new RRCommand((converter.convertTrajectoryToAction(-60, -50, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO))),
                 wait = new Wait(300),
                 new WaitUntilCommand(wait::isFinished),
 
-                new RRCommand((converter.convertTrajectoryToAction(-6, -24, Math.toRadians(-90), DriveToConverter.MovementType.LINE_TO_Y))),
+                new RRCommand((converter.convertTrajectoryToAction(-6, -24, Math.toRadians(-90), DriveToConverter.MovementType.SPLINE_TO))),
                 wait = new Wait(300),
                 new WaitUntilCommand(wait::isFinished),
                 //new Specimen(),
