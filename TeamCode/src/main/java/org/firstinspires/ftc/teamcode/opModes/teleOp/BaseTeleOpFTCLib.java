@@ -34,6 +34,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
     GamepadEx gamepadEx2;
     boolean specimen = false;
     String fancytitle = " ";
+    String fancytitle2 = "VegeMight ©";
 
     @Override
     public void initialize() {
@@ -100,26 +101,26 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         telemetry.addData("Current Status", hardware.currentStatus);
         telemetry.addData("Specimen",specimen);
         telemetry.addData("ClawRotationState", (hardware.clawrotServo.getPosition())/0.25);
-        telemetry.addData("", fancytitle);
+        telemetry.addLine(fancytitle);
         //Positions Telemetry
         telemetry.addData("Current Positions", fancytitle);
         telemetry.addData("Arm Position", hardware.leftArm.getPosition());
         telemetry.addData("Wrist Position", hardware.wristServo.getPosition());
         telemetry.addData("Lift Position", hardware.leftSpool.getCurrentPosition());
         telemetry.addData("Claw Rotation Position", hardware.clawrotServo.getPosition());
-        telemetry.addData("", fancytitle);
+        telemetry.addLine(fancytitle);
         //Other Telemetry
         telemetry.addData("Others", fancytitle);
         telemetry.addData("LiftVelo", hardware.leftSpool.getVelocity());
 
         //Trademark
-        telemetry.addData("", fancytitle);
-        telemetry.addData("", fancytitle);
-        telemetry.addData("", fancytitle);
-        telemetry.addData("", fancytitle);
-        telemetry.addData("", fancytitle);
-        telemetry.addData("", fancytitle);
-        telemetry.addData("VegeMight ©", fancytitle);
+        telemetry.addLine(fancytitle);
+        telemetry.addLine(fancytitle);
+        telemetry.addLine(fancytitle);
+        telemetry.addLine(fancytitle);
+        telemetry.addLine(fancytitle);
+        telemetry.addLine(fancytitle);
+        telemetry.addLine(fancytitle2);
 
         telemetry.update();
     }

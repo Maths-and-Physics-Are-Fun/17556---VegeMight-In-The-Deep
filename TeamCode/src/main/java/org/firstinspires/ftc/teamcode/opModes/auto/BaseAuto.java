@@ -102,7 +102,7 @@ public class BaseAuto extends LinearOpMode {
                 wait = new Wait(300),
                 new WaitUntilCommand(wait::isFinished),
 
-                new RRCommand((converter.convertTrajectoryToAction(-60, 7, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_X))),
+                new RRCommand((converter.convertTrajectoryToAction(-60, 7, Math.toRadians(90), DriveToConverter.MovementType.STRAFE_TO))),
                 wait = new Wait(300),
                 new WaitUntilCommand(wait::isFinished),
 
@@ -202,7 +202,7 @@ public class BaseAuto extends LinearOpMode {
             telemetry.addData(":                                 :", fancytitle);
             telemetry.addData(":                                 :", fancytitle);
             telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
-        } else if (letter==2) {
+        } else if (letter==2 || letter==6) {
             telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
             telemetry.addData("::::::                       ::::::", fancytitle);
             telemetry.addData(":::       ::::::::::::::::       ::", fancytitle);
@@ -237,6 +237,40 @@ public class BaseAuto extends LinearOpMode {
             telemetry.addData(":     :::::::::::::::::::::::     :", fancytitle);
             telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
         } else if (letter == 5) {
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+        }  else if (letter == 7) {
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+        } else if (letter == 8) {
             telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
             telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
             telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
