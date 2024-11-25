@@ -61,6 +61,8 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 new InstantCommand(() -> letter=7),
                 new Wait(3000),
                 new InstantCommand(()->letter=8),
+                new Wait(3000),
+                new InstantCommand(()->letter=9),
                 new Wait(3000)
         ));
         CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
@@ -319,6 +321,23 @@ public class BaseSpecimenAuto extends LinearOpMode {
             telemetry.addData(":::::::::::::         :::::::::::::", fancytitle);
             telemetry.addData(":::::::::::::         :::::::::::::", fancytitle);
             telemetry.addData(":::::::::::::         :::::::::::::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+        } else if (letter == 9 ){
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
+            telemetry.addData("::         ::         ::         ::", fancytitle);
             telemetry.addData(":::::::::::::::::::::::::::::::::::", fancytitle);
         }
     }
