@@ -58,6 +58,7 @@ public class HardwareReference {
 
     // AUTO
     public org.firstinspires.ftc.teamcode.MecanumDrive autoDrive;
+    public Pose2d currentPose;
 
 
     public static HardwareReference getInstance() {
@@ -88,7 +89,8 @@ public class HardwareReference {
         backLeftMotor.setInverted(true);
 
         drivetrain = new MecanumDrive(false, frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
-        autoDrive = new org.firstinspires.ftc.teamcode.MecanumDrive(hardwareMap, new Pose2d(11.27, 59.41, Math.toRadians(270)));
+        autoDrive = new org.firstinspires.ftc.teamcode.MecanumDrive(hardwareMap, new Pose2d(-9, 65, Math.toRadians(270)));
+        currentPose =  new Pose2d(-9, 65, Math.toRadians(270));
 
         // Retrieve the spool motors and configure them
         leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_312);

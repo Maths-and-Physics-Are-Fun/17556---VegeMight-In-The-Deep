@@ -20,8 +20,10 @@ public class Arm extends SubsystemBase {
 
     @Override
     public void periodic() {
-        hardware.leftArm.setPosition(Math.min(armMiniTargetPosition, armTargetPosition));
-        hardware.rightArm.setPosition(Math.min(armMiniTargetPosition, armTargetPosition));
+        //hardware.leftArm.setPosition(Math.min(armMiniTargetPosition, armTargetPosition));
+        //hardware.rightArm.setPosition(Math.min(armMiniTargetPosition, armTargetPosition));
+        hardware.leftArm.setPosition(armTargetPosition);
+        hardware.rightArm.setPosition(armTargetPosition);
     }
 
     public int getIteration() {

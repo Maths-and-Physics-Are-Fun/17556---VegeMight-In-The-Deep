@@ -67,6 +67,7 @@ public class Lift extends SubsystemBase {
 
     public void liftLow() {
         hardware.leftSpool.stopMotor();
+        hardware.rightSpool.stopMotor();
         setPosition(Globals.LIFT_LOW);
     }
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.common;
 
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 
@@ -13,12 +14,15 @@ public class DriveToConverter {
         LINE_TO_X,
         LINE_TO_Y,
         SPLINE_TO,
-        STRAFE_TO_HEADING
+        SPLINE_TO_CONSTANT_HEADING,
+        SPLINE_TO_LINEAR_HEADING,
+        STRAFE_TO_HEADING,
+        TURN
     }
 
     public DriveToConverter() {}
     public Action convertTrajectoryToAction(double xDest, double yDest, double heading, MovementType movementType) {
-        TrajectoryActionBuilder trajActionBuilder = HardwareReference.getInstance().autoDrive.actionBuilder(HardwareReference.getInstance().autoDrive.pose);
+        TrajectoryActionBuilder trajActionBuilder = HardwareReference.getInstance().autoDrive.actionBuilder(HardwareReference.getInstance().currentPose);
         switch (movementType) {
             case STRAFE_TO:
                 trajActionBuilder = trajActionBuilder.strafeTo(new Vector2d(xDest, yDest));
@@ -32,11 +36,21 @@ public class DriveToConverter {
             case SPLINE_TO:
                 trajActionBuilder = trajActionBuilder.splineTo(new Vector2d(xDest, yDest), heading);
                 break;
+            case SPLINE_TO_CONSTANT_HEADING:
+                trajActionBuilder = trajActionBuilder.splineToConstantHeading(new Vector2d(xDest, yDest), heading);
+                break;
+            case SPLINE_TO_LINEAR_HEADING:
+                trajActionBuilder = trajActionBuilder.splineToLinearHeading(new Pose2d(xDest, yDest, heading), Math.toRadians(90));
+                break;
             case STRAFE_TO_HEADING:
                 trajActionBuilder = trajActionBuilder.strafeToLinearHeading(new Vector2d(xDest, yDest), heading);
                 break;
+            case TURN:
+                trajActionBuilder = trajActionBuilder.turnTo(heading);
+                break;
         }
         Action driveAction = trajActionBuilder.build();
+        HardwareReference.getInstance().currentPose = new Pose2d(xDest, yDest, heading);
         return driveAction;
     }
 }

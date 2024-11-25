@@ -38,6 +38,9 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
 
     @Override
     public void initialize() {
+        // RESET THE COMMAND SCHEDULER
+        CommandScheduler.getInstance().reset();
+
         // Initalize hardware
         gamepadEx1 = new GamepadEx(gamepad1);
         gamepadEx2 = new GamepadEx(gamepad2);
