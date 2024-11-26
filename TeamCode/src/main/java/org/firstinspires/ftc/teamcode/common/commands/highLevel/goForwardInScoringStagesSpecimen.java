@@ -9,6 +9,7 @@ import com.arcrobotics.ftclib.command.WaitUntilCommand;
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Grab;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.HoverSpecimenBeforeDeposit;
+import org.firstinspires.ftc.teamcode.common.commands.lowLevel.HoverSpecimenBeforeDepositTeleOp;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Idle;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.PickUpSpecimen;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Rumble;
@@ -22,7 +23,7 @@ public class goForwardInScoringStagesSpecimen extends SelectCommand {
     public goForwardInScoringStagesSpecimen (){
         super(
                 new HashMap<Object, Command>() {{
-                    put(ScoreSystem.IDLE, new HoverSpecimenBeforeDeposit());
+                    put(ScoreSystem.IDLE, new HoverSpecimenBeforeDepositTeleOp());
                     put(ScoreSystem.HOVER_SPECIMEN_BEFORE_GRAB, new PickUpSpecimen().alongWith(new Rumble()));
                     put(ScoreSystem.HOVER_SPECIMEN_BEFORE_DEPOSIT, new Specimen().alongWith(new Rumble()));
                     Wait wait;
