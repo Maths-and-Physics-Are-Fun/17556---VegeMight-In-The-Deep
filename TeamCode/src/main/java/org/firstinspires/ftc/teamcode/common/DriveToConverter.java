@@ -53,4 +53,11 @@ public class DriveToConverter {
         HardwareReference.getInstance().currentPose = new Pose2d(xDest, yDest, heading);
         return driveAction;
     }
+
+    public Action convertTrajectoryToAction(TrajectoryActionBuilder trajActionBuilder) {
+        Action driveAction = trajActionBuilder.build();
+        //HardwareReference.getInstance().currentPose = new Pose2d(driveAction., yDest, heading);
+        return driveAction;
+    }
+
 }

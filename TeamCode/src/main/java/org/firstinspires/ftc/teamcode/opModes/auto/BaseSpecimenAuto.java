@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.opModes.auto;
 
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.Vector2d;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
@@ -13,6 +16,7 @@ import org.firstinspires.ftc.teamcode.common.DriveToConverter;
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 import org.firstinspires.ftc.teamcode.common.RRCommand;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.HoverSpecimenBeforeDeposit;
+import org.firstinspires.ftc.teamcode.common.commands.lowLevel.HoverSpecimenBeforeDepositTeleOp;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.HoverSpecimenBeforeGrab;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Idle;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.PickUpSpecimen;
@@ -68,6 +72,7 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 new InstantCommand(()->letter=9),
                 new Wait(3000)
         ));
+        TrajectoryActionBuilder trajActionBuilder;
         CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
                 // Go to specimen scoring position
                 new RRCommand(converter.convertTrajectoryToAction(hardware.currentPose.position.x, 37.5,  Math.toRadians(-90), DriveToConverter.MovementType.LINE_TO_Y)).alongWith(
@@ -89,20 +94,34 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 wait = new Wait(0),
                 new WaitUntilCommand(wait::isFinished)),
 
+                new RRCommand(HardwareReference.getInstance().autoDrive.actionBuilder(HardwareReference.getInstance().currentPose)
+                        // Go to intermitent position
+                        .splineTo(new Vector2d( -36, 40), Math.toRadians(90))
+                        // Go to sample 1
+                        .lineToY(10)
+                        // Strafe in front of the sample
+                        .strafeTo(new Vector2d(-52, 10))
+                        // Push Sample 1 into the observation zone
+                        .splineToLinearHeading(new Pose2d(-52, 64, Math.toRadians(90)), Math.toRadians(90))
+                        // Go backwards slightly
+                        .lineToY(48)
+                        .build()
+                ),
+
                 // Go to intermitent position
-                new RRCommand(converter.convertTrajectoryToAction(-36, 40, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO)),
+                //new RRCommand(converter.convertTrajectoryToAction(-36, 40, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO)),
 
                 // Go to sample 1
-                new RRCommand(converter.convertTrajectoryToAction(-36, 10, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_Y)),
+                //new RRCommand(converter.convertTrajectoryToAction(-36, 10, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_Y)),
 
                 // Strafe in front of the sample
-                new RRCommand(converter.convertTrajectoryToAction(-52, 10, Math.toRadians(90), DriveToConverter.MovementType.STRAFE_TO)),
+                //new RRCommand(converter.convertTrajectoryToAction(-52, 10, Math.toRadians(90), DriveToConverter.MovementType.STRAFE_TO)),
 
                 // Push Sample 1 into the observation zone
-                new RRCommand(converter.convertTrajectoryToAction(-52, 64, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_LINEAR_HEADING)),
+                //new RRCommand(converter.convertTrajectoryToAction(-52, 64, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_LINEAR_HEADING)),
 
                 // Go backwards slightly
-                new RRCommand(converter.convertTrajectoryToAction(-52, 48, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_Y)),
+                //new RRCommand(converter.convertTrajectoryToAction(-52, 48, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_Y)),
                 new HoverSpecimenBeforeGrab(),
                 new Wait(800),
                 new PickUpSpecimen(),
@@ -130,7 +149,9 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 new Wait(800),
                 new PickUpSpecimen(),
                 // Go to submersible
-                new RRCommand(converter.convertTrajectoryToAction(-9, 27, Math.toRadians(-90), DriveToConverter.MovementType.SPLINE_TO_LINEAR_HEADING)),
+                new RRCommand(converter.convertTrajectoryToAction(0, 27, Math.toRadians(-90), DriveToConverter.MovementType.SPLINE_TO_LINEAR_HEADING)).alongWith(
+                        new HoverSpecimenBeforeDeposit()
+                ),
 
 
                 // Score
