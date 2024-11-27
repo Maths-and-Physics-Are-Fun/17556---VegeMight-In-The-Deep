@@ -21,7 +21,7 @@ public class DriveToConverter {
     }
 
     public DriveToConverter() {}
-    public Action convertTrajectoryToAction(double xDest, double yDest, double heading, MovementType movementType) {
+    public static Action convertTrajectoryToAction(double xDest, double yDest, double heading, MovementType movementType) {
         TrajectoryActionBuilder trajActionBuilder = HardwareReference.getInstance().autoDrive.actionBuilder(HardwareReference.getInstance().currentPose);
         switch (movementType) {
             case STRAFE_TO:
@@ -54,7 +54,7 @@ public class DriveToConverter {
         return driveAction;
     }
 
-    public Action convertTrajectoryToAction(TrajectoryActionBuilder trajActionBuilder) {
+    public static Action convertTrajectoryToAction(TrajectoryActionBuilder trajActionBuilder) {
         Action driveAction = trajActionBuilder.build();
         //HardwareReference.getInstance().currentPose = new Pose2d(driveAction., yDest, heading);
         return driveAction;

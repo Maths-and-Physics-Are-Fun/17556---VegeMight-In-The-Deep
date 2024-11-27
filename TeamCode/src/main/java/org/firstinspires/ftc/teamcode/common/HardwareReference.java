@@ -66,7 +66,7 @@ public class HardwareReference {
         return instance;
     }
 
-    public void initHardware(final HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2) {
+    public void initHardware(final HardwareMap hardwareMap, Gamepad gamepad1, Gamepad gamepad2, double xStart, double yStart, double headingStart) {
         this.hardwareMap = hardwareMap;
         this.gamepad1 = gamepad1;
         this.gamepad2 = gamepad2;
@@ -89,8 +89,8 @@ public class HardwareReference {
         backLeftMotor.setInverted(true);
 
         drivetrain = new MecanumDrive(false, frontLeftMotor, frontRightMotor, backLeftMotor, backRightMotor);
-        autoDrive = new org.firstinspires.ftc.teamcode.MecanumDrive(hardwareMap, new Pose2d(-9, 65, Math.toRadians(270)));
-        currentPose =  new Pose2d(-9, 65, Math.toRadians(270));
+        autoDrive = new org.firstinspires.ftc.teamcode.MecanumDrive(hardwareMap, new Pose2d(xStart, yStart, headingStart));
+        currentPose =  new Pose2d(xStart, yStart, headingStart);
 
         // Retrieve the spool motors and configure them
         leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_312);

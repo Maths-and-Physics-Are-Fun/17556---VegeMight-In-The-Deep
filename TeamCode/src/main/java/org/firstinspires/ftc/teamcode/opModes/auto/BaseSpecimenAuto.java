@@ -39,7 +39,7 @@ public class BaseSpecimenAuto extends LinearOpMode {
         CommandScheduler.getInstance().reset();
                 // Initialize the singleton hardware reference
         Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
-        hardware.initHardware(hardwareMap, gamepad1, gamepad2);
+        hardware.initHardware(hardwareMap, gamepad1, gamepad2, -9, 65, Math.toRadians(270));
         CommandScheduler.getInstance().schedule(new Idle());
     }
 

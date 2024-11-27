@@ -47,7 +47,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
 
 
         // Initialize the singleton hardware reference
-        hardware.initHardware(hardwareMap, gamepad1, gamepad2);
+        hardware.initHardware(hardwareMap, gamepad1, gamepad2,0, 0, 0);
 
         // Bind appropriate commands to buttons
         // Go forward and backward in intake and deposit statuses

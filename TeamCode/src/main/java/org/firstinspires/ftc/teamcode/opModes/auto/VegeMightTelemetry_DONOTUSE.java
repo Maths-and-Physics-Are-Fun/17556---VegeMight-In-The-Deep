@@ -22,7 +22,7 @@ public class VegeMightTelemetry_DONOTUSE extends LinearOpMode {
         // Reset the command scheduler singleton
         CommandScheduler.getInstance().reset();
         // Initialize the singleton hardware reference
-        hardware.initHardware(hardwareMap, gamepad1, gamepad2);
+        hardware.initHardware(hardwareMap, gamepad1, gamepad2, 0, 0, 0);
     }
 
     @Override
