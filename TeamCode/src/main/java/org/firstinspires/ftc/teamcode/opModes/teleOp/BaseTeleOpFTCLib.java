@@ -33,6 +33,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
     GamepadEx gamepadEx1;
     GamepadEx gamepadEx2;
     boolean specimen = false;
+    boolean flagStatus = true;
     String fancytitle = " ";
     String fancytitle2 = "VegeMight ©";
 
@@ -56,6 +57,8 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ConditionalCommand(new goBackwardInScoringStages(), new goBackwardInScoringStagesSpecimen(), () -> !specimen));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new ConditionalCommand(new goForwardInScoringStages(), new goForwardInScoringStagesSpecimen(), ()-> !specimen));
 
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> this.flagStatus=!flagStatus));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ConditionalCommand(new InstantCommand(() -> HardwareReference.getInstance().flag.FlagUp()), new InstantCommand(()-> HardwareReference.getInstance().flag.FlagDown()), ()-> flagStatus));
         //Claw Rotation
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new AdjustClawRotation());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new AdjustClawRotationBack());
