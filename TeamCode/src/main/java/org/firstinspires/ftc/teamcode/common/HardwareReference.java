@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.common.statuses.ClawStatus;
 import org.firstinspires.ftc.teamcode.common.statuses.ScoreSystem;
 import org.firstinspires.ftc.teamcode.common.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.common.subsystems.Flag;
 import org.firstinspires.ftc.teamcode.common.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.common.subsystems.Wrist;
 
@@ -51,10 +52,13 @@ public class HardwareReference {
     public ServoEx leftArm;
     public ServoEx rightArm;
 
+    public ServoEx FlagServo;
+
     public Claw claw;
     public Wrist wrist;
     public Arm arm;
     public Lift lift;
+    public Flag flag;
 
     // AUTO
     public org.firstinspires.ftc.teamcode.MecanumDrive autoDrive;
@@ -111,12 +115,14 @@ public class HardwareReference {
         leftArm = new SimpleServo(hardwareMap, "leftarm", 0, 270);
         rightArm = new SimpleServo(hardwareMap, "rightarm", 0, 270);
         rightArm.setInverted(true);
-
+        //Flag Servo
+        FlagServo = new SimpleServo(hardwareMap, "Flag", 0,180);
         // Subsystems
         claw = new Claw();
         wrist = new Wrist();
         arm = new Arm();
         lift = new Lift();
+        flag = new Flag();
 
     }
 

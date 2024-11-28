@@ -28,4 +28,7 @@ public class Globals {
     public static int LIFT_SPECIMEN_HOVER = 1150;
     public static int LIFT_SPECIMEN_PICKUP = 600;
     public static int LIFT_SPECIMEN_HOVER_TELEOP = 1200;
+
+    public static int FLAG_UP =1;
+    public static int FLAG_DOWN=0;
 }
