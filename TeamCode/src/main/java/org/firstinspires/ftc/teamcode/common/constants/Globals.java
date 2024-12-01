@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class Globals {
-    public static double WRIST_IDLE = 0.36; //0.45
+    public static double WRIST_IDLE = 1; //0.36;
     public static double WRIST_PICKUP = 0.54;
     public static double WRIST_DEPOSIT = 0.76;
     public static double WRIST_PARK = 0.815;
@@ -12,9 +12,9 @@ public class Globals {
     public static double WRIST_SPECIMEN_PICKUP = 0.87;
 
     public static double CLAW_OPEN = 0.6;
-    public static double CLAW_CLOSED = 1;
+    public static double CLAW_CLOSED = 1; //1;
 
-    public static double ARM_IDLE = 0.028;
+    public static double ARM_IDLE = 1; //0.028;
     public static double ARM_HOVER = 0.55;
     public static double ARM_PICKUP = 0.6051;
     public static double ARM_DEPOSIT = 0.265;

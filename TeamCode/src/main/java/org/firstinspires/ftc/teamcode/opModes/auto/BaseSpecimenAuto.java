@@ -166,7 +166,7 @@ public class BaseSpecimenAuto extends LinearOpMode {
 
                 // Park in observation
                 new RRCommand(converter.convertTrajectoryToAction(-62, 55, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_Y)),
-                new InstantCommand(() -> HardwareReference.getInstance().flag.FlagUp()),
+                //new InstantCommand(() -> HardwareReference.getInstance().flag.FlagUp()),
                 new InstantCommand(this::requestOpModeStop)
         ));
 
