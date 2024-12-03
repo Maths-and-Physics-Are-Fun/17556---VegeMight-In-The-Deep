@@ -18,6 +18,7 @@ public class HoverSpecimenBeforeGrab extends CommandBase {
         hardware.wrist.wristSpecimenPickUp();
         hardware.arm.armSpecimenPickUp();
         hardware.lift.liftLow();
+        hardware.claw.clawRotSetPosition(3);
         hardware.currentStatus = ScoreSystem.HOVER_SPECIMEN_BEFORE_GRAB;
     }
 

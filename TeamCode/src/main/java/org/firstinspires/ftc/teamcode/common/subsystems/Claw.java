@@ -19,6 +19,7 @@ public class Claw extends SubsystemBase {
     @Override
     public void periodic() {
         hardware.clawServo.setPosition(clawTargetPosition);
+        hardware.clawrotServo.setPosition(clawRotationTargetPosition);
     }
 
     private void setPosition(double position) {
@@ -45,6 +46,12 @@ public class Claw extends SubsystemBase {
         }
         clawRotationState=clawRotationState+stage;
 
+        clawRotationTargetPosition = clawRotationState*0.25;
+        hardware.clawrotServo.setPosition(clawTargetPosition);
+    }
+
+    public void clawRotSetPosition(double stage){
+        clawRotationState=stage;
         clawRotationTargetPosition = clawRotationState*0.25;
         hardware.clawrotServo.setPosition(clawTargetPosition);
     }

@@ -18,6 +18,7 @@ public class HoverSpecimenBeforeDeposit extends CommandBase {
         hardware.wrist.wristSpecimenDeposit();
         hardware.arm.armDeposit();
         hardware.lift.liftSpecimen();
+        hardware.claw.clawRotSetPosition(0);
         hardware.currentStatus = ScoreSystem.HOVER_SPECIMEN_BEFORE_DEPOSIT;
     }
 

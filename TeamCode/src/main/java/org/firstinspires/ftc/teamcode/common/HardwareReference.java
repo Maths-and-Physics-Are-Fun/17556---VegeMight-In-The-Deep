@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.common.statuses.ClawStatus;
 import org.firstinspires.ftc.teamcode.common.statuses.ScoreSystem;
 import org.firstinspires.ftc.teamcode.common.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
-//import org.firstinspires.ftc.teamcode.common.subsystems.Flag;
+import org.firstinspires.ftc.teamcode.common.subsystems.Flag;
 import org.firstinspires.ftc.teamcode.common.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.common.subsystems.Wrist;
 
@@ -52,13 +52,13 @@ public class HardwareReference {
     public ServoEx leftArm;
     public ServoEx rightArm;
 
-    //public ServoEx FlagServo;
+    public ServoEx FlagServo;
 
     public Claw claw;
     public Wrist wrist;
     public Arm arm;
     public Lift lift;
-    //public Flag flag;
+    public Flag flag;
 
     // AUTO
     public org.firstinspires.ftc.teamcode.MecanumDrive autoDrive;
@@ -97,8 +97,8 @@ public class HardwareReference {
         currentPose =  new Pose2d(xStart, yStart, headingStart);
 
         // Retrieve the spool motors and configure them
-        leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_312);
-        rightSpool = new MotorEx(hardwareMap, "RightSpool", MotorEx.GoBILDA.RPM_312);
+        leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_435);
+        rightSpool = new MotorEx(hardwareMap, "RightSpool", MotorEx.GoBILDA.RPM_435);
         leftSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
         rightSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
         leftSpool.setInverted(true);
@@ -115,15 +115,15 @@ public class HardwareReference {
         //Arm Servos
         leftArm = new SimpleServo(hardwareMap, "leftarm", 0, 270);
         rightArm = new SimpleServo(hardwareMap, "rightarm", 0, 270);
-        rightArm.setInverted(true);
+        leftArm.setInverted(true);
         //Flag Servo
-        //FlagServo = new SimpleServo(hardwareMap, "Flag", 0,180);
+        FlagServo = new SimpleServo(hardwareMap, "flag", 0,180);
         // Subsystems
         claw = new Claw();
         wrist = new Wrist();
         arm = new Arm();
         lift = new Lift();
-        //flag = new Flag();
+        flag = new Flag();
 
     }
 
