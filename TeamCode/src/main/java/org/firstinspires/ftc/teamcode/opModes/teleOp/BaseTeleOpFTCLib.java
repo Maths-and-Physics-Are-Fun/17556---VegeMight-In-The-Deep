@@ -11,6 +11,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 import org.firstinspires.ftc.teamcode.common.commands.highLevel.goBackwardInScoringStages;
 import org.firstinspires.ftc.teamcode.common.commands.highLevel.goBackwardInScoringStagesSpecimen;
@@ -118,6 +119,10 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         //Other Telemetry
         telemetry.addData("Others", fancytitle);
         telemetry.addData("LiftVelo", hardware.leftSpool.getVelocity());
+        telemetry.addData("LiftTargetPosition", hardware.lift.targetLiftPosition);
+        telemetry.addData("LeftSpoolCurrent", hardware.leftSpool.getCurrent(CurrentUnit.MILLIAMPS));
+        telemetry.addData("RightSpoolCurrent", hardware.rightSpool.getCurrent(CurrentUnit.MILLIAMPS));
+        telemetry.addData("DOYOUWORK?", hardware.lift.DOYOUWORK);
 
         //Trademark
         telemetry.addLine(fancytitle);

@@ -17,8 +17,9 @@ public class HoverSpecimenBeforeDepositTeleOp extends CommandBase {
     public void initialize() { //Make specimen deposit
         hardware.claw.clawClose();
         hardware.wrist.wristSpecimenDeposit();
-        hardware.arm.armDeposit();
+        hardware.arm.armIdle();
         hardware.lift.liftSpecimenTeleOP();
+        hardware.claw.clawRotSetPosition(0);
         hardware.currentStatus = ScoreSystem.HOVER_SPECIMEN_BEFORE_DEPOSIT;
     }
 

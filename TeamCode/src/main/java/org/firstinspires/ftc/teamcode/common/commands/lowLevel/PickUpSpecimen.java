@@ -10,7 +10,8 @@ public class PickUpSpecimen extends SequentialCommandGroup {
     public PickUpSpecimen() {
         super(
                 new InstantCommand(() -> HardwareReference.getInstance().claw.clawClose()).andThen(new Wait(500)),
-                new InstantCommand(() -> HardwareReference.getInstance().lift.liftPickup()).andThen(new Wait(500)),
+                new InstantCommand(() -> HardwareReference.getInstance().claw.clawRotSetPosition(0)).andThen(
+                new InstantCommand(() -> HardwareReference.getInstance().lift.liftPickup()).andThen(new Wait(500))),
                 new Idle()
         );
     }

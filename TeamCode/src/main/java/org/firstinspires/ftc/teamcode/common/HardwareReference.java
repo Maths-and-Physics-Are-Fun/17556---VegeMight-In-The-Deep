@@ -9,6 +9,9 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -41,8 +44,8 @@ public class HardwareReference {
     public MotorEx backRightMotor;
     public MecanumDrive drivetrain;
 
-    public MotorEx leftSpool;
-    public MotorEx rightSpool;
+    public DcMotorEx leftSpool;
+    public DcMotorEx rightSpool;
 
 
     public ServoEx wristServo;
@@ -97,15 +100,20 @@ public class HardwareReference {
         currentPose =  new Pose2d(xStart, yStart, headingStart);
 
         // Retrieve the spool motors and configure them
-        leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_435);
-        rightSpool = new MotorEx(hardwareMap, "RightSpool", MotorEx.GoBILDA.RPM_435);
-        leftSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-        rightSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-        leftSpool.setInverted(true);
+//        leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_435);
+//        rightSpool = new MotorEx(hardwareMap, "RightSpool", MotorEx.GoBILDA.RPM_435);
+//        leftSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+//        rightSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+//        leftSpool.setInverted(true);
+        leftSpool = hardwareMap.get(DcMotorEx.class, "LeftSpool");
+        rightSpool = hardwareMap.get(DcMotorEx.class, "RightSpool");
+        leftSpool.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightSpool.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftSpool.setDirection(DcMotor.Direction.REVERSE);
 
         // Reset spool motor encoders
-        leftSpool.stopAndResetEncoder();
-        rightSpool.stopAndResetEncoder();
+        leftSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Claw Servos
         wristServo = new SimpleServo(hardwareMap, "wristRot", 0, 270);

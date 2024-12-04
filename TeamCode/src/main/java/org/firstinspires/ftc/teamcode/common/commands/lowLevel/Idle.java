@@ -21,6 +21,7 @@ public class Idle extends CommandBase {
         hardware.wrist.wristIdle();
         hardware.arm.armIdle();
         hardware.lift.liftLow();
+        hardware.claw.clawRotSetPosition(0);
         hardware.currentStatus = ScoreSystem.IDLE;
     }
 

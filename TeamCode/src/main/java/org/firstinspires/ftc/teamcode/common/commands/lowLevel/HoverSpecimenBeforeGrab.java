@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.common.commands.lowLevel;
 
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 import org.firstinspires.ftc.teamcode.common.statuses.ScoreSystem;
@@ -14,12 +17,23 @@ public class HoverSpecimenBeforeGrab extends CommandBase {
 
     @Override
     public void initialize() { //Make specimen deposit
-        hardware.claw.clawOpen();
-        hardware.wrist.wristSpecimenPickUp();
-        hardware.arm.armSpecimenPickUp();
-        hardware.lift.liftLow();
-        hardware.claw.clawRotSetPosition(3);
-        hardware.currentStatus = ScoreSystem.HOVER_SPECIMEN_BEFORE_GRAB;
+
+        CommandScheduler.getInstance().schedule(new InstantCommand(
+                () -> hardware.wrist.wristSpecimenPickUp()
+        ).alongWith(
+                new InstantCommand(()-> hardware.arm.armSpecimenPickUp())
+        ).alongWith(
+                new InstantCommand(() -> hardware.lift.liftLow())
+        ).alongWith(
+                new InstantCommand(() -> hardware.currentStatus = ScoreSystem.HOVER_SPECIMEN_BEFORE_GRAB)
+        ).alongWith(
+                new InstantCommand(()-> hardware.claw.clawRotSetPosition(4))
+        ).andThen(
+                new SequentialCommandGroup(
+                        new Wait(300),
+                        new InstantCommand(()-> hardware.claw.clawOpen())
+                )
+        ));
     }
 
     @Override

@@ -48,6 +48,9 @@ public class Arm extends SubsystemBase {
     }
 
     public void adjustPosition(double adjustment) {
+        if (armTargetPosition+adjustment<0 || armTargetPosition+adjustment>1){
+            adjustment=0;
+        }
         armTargetPosition += adjustment;
         targetPositionChanged = true;
     }
