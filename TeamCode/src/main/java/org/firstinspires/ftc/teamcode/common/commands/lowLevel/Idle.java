@@ -16,9 +16,12 @@ public class Idle extends CommandBase {
     @Override
     public void initialize() {
         hardware.claw.clawClose();
+
+
         hardware.wrist.wristIdle();
         hardware.arm.armIdle();
         hardware.lift.liftLow();
+        hardware.claw.clawRotSetPosition(0);
         hardware.currentStatus = ScoreSystem.IDLE;
     }
 

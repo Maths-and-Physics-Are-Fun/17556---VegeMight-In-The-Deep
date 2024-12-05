@@ -16,7 +16,7 @@ public class Specimen extends CommandBase {
     public void initialize() { //Make specimen deposit
         hardware.claw.clawClose();
         hardware.wrist.wristSpecimenDeposit();
-        hardware.arm.armDeposit();
+        hardware.arm.armIdle();
         hardware.lift.liftMedium();
         hardware.currentStatus = ScoreSystem.DEPOSIT_SPECIMEN;
 

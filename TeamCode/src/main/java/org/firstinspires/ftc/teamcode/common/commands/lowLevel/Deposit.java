@@ -19,6 +19,7 @@ public class Deposit extends CommandBase {
         hardware.wrist.wristDeposit();
         hardware.arm.armDeposit();
         hardware.lift.liftHigh();
+        hardware.claw.clawRotSetPosition(0);
         hardware.currentStatus = ScoreSystem.DEPOSIT;
     }
 

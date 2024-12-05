@@ -25,14 +25,15 @@ public class goForwardInScoringStagesSpecimen extends SelectCommand {
                 new HashMap<Object, Command>() {{
                     put(ScoreSystem.IDLE, new HoverSpecimenBeforeDepositTeleOp());
                     put(ScoreSystem.HOVER_SPECIMEN_BEFORE_GRAB, new PickUpSpecimen().alongWith(new Rumble()));
-                    put(ScoreSystem.HOVER_SPECIMEN_BEFORE_DEPOSIT, new Specimen().alongWith(new Rumble()));
-                    Wait wait;
-                    put(ScoreSystem.DEPOSIT_SPECIMEN, new SequentialCommandGroup(
+                    put(ScoreSystem.HOVER_SPECIMEN_BEFORE_DEPOSIT, new SequentialCommandGroup(
+                            new Specimen().alongWith(new Rumble()),
+                            new Wait(350),
                             new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-                            wait = new Wait(600),
-                            new WaitUntilCommand(wait::isFinished),
+                            new Wait(300),
+                            new InstantCommand(() -> HardwareReference.getInstance().wrist.wristSpecimenDeposit()).andThen(
                             new Idle()
-                    ));
+                            ))
+                    );
                 }},
                 () -> HardwareReference.getInstance().currentStatus
         );

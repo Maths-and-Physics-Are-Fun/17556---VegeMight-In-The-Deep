@@ -53,24 +53,25 @@ public class BaseSampleAuto extends LinearOpMode {
         //Update Pose without going into hardware???????
         CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
                 //Go to Sample Deposit Area
-                new RRCommand(converter.convertTrajectoryToAction(52, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
+                new RRCommand(converter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
                     new SequentialCommandGroup(
                         new Wait(500),
                         new Deposit()
                     )
                 ),
                 new Wait(500),
-                new RRCommand(converter.convertTrajectoryToAction(57, 55, Math.toRadians(45), DriveToConverter.MovementType.LINE_TO_Y)),
-                new Wait (700),
+                new RRCommand(converter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
+                new Wait (400),
                 new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-                new RRCommand(converter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.LINE_TO_Y)),
+                new Wait(100),
+                new RRCommand(converter.convertTrajectoryToAction(46, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
                 new Idle().alongWith(
                         new RRCommand(converter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
                 ),
-                new SampleScore(48),
+                new SampleScore(45),
                 new SampleScore(60),
 
-                new RRCommand(converter.convertTrajectoryToAction(18, 0,  Math.toRadians(180), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
+                new RRCommand(converter.convertTrajectoryToAction(18, 18,  Math.toRadians(180), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
                         //Park
                         new Park()
                 ),

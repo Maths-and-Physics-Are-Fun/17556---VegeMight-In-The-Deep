@@ -9,6 +9,9 @@ import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -17,6 +20,7 @@ import org.firstinspires.ftc.teamcode.common.statuses.ClawStatus;
 import org.firstinspires.ftc.teamcode.common.statuses.ScoreSystem;
 import org.firstinspires.ftc.teamcode.common.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
+import org.firstinspires.ftc.teamcode.common.subsystems.Flag;
 import org.firstinspires.ftc.teamcode.common.subsystems.Lift;
 import org.firstinspires.ftc.teamcode.common.subsystems.Wrist;
 
@@ -40,8 +44,8 @@ public class HardwareReference {
     public MotorEx backRightMotor;
     public MecanumDrive drivetrain;
 
-    public MotorEx leftSpool;
-    public MotorEx rightSpool;
+    public DcMotorEx leftSpool;
+    public DcMotorEx rightSpool;
 
 
     public ServoEx wristServo;
@@ -51,10 +55,13 @@ public class HardwareReference {
     public ServoEx leftArm;
     public ServoEx rightArm;
 
+    public ServoEx FlagServo;
+
     public Claw claw;
     public Wrist wrist;
     public Arm arm;
     public Lift lift;
+    public Flag flag;
 
     // AUTO
     public org.firstinspires.ftc.teamcode.MecanumDrive autoDrive;
@@ -93,30 +100,38 @@ public class HardwareReference {
         currentPose =  new Pose2d(xStart, yStart, headingStart);
 
         // Retrieve the spool motors and configure them
-        leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_312);
-        rightSpool = new MotorEx(hardwareMap, "RightSpool", MotorEx.GoBILDA.RPM_312);
-        leftSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-        rightSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-        leftSpool.setInverted(true);
+//        leftSpool = new MotorEx(hardwareMap, "LeftSpool", MotorEx.GoBILDA.RPM_435);
+//        rightSpool = new MotorEx(hardwareMap, "RightSpool", MotorEx.GoBILDA.RPM_435);
+//        leftSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+//        rightSpool.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+//        leftSpool.setInverted(true);
+        leftSpool = hardwareMap.get(DcMotorEx.class, "LeftSpool");
+        rightSpool = hardwareMap.get(DcMotorEx.class, "RightSpool");
+        leftSpool.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightSpool.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftSpool.setDirection(DcMotor.Direction.REVERSE);
 
         // Reset spool motor encoders
-        leftSpool.stopAndResetEncoder();
-        rightSpool.stopAndResetEncoder();
+        leftSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Claw Servos
         wristServo = new SimpleServo(hardwareMap, "wristRot", 0, 270);
         clawServo = new SimpleServo(hardwareMap, "clawGrip", 0, 270);
+        clawServo.setInverted(true);
         clawrotServo = new SimpleServo(hardwareMap, "clawRot", 0, 180);
         //Arm Servos
         leftArm = new SimpleServo(hardwareMap, "leftarm", 0, 270);
         rightArm = new SimpleServo(hardwareMap, "rightarm", 0, 270);
-        rightArm.setInverted(true);
-
+        leftArm.setInverted(true);
+        //Flag Servo
+        FlagServo = new SimpleServo(hardwareMap, "flag", 0,180);
         // Subsystems
         claw = new Claw();
         wrist = new Wrist();
         arm = new Arm();
         lift = new Lift();
+        flag = new Flag();
 
     }
 

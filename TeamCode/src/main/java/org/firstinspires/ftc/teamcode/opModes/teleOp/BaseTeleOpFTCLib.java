@@ -11,6 +11,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.common.HardwareReference;
 import org.firstinspires.ftc.teamcode.common.commands.highLevel.goBackwardInScoringStages;
 import org.firstinspires.ftc.teamcode.common.commands.highLevel.goBackwardInScoringStagesSpecimen;
@@ -33,6 +34,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
     GamepadEx gamepadEx1;
     GamepadEx gamepadEx2;
     boolean specimen = false;
+    boolean flagStatus = true;
     String fancytitle = " ";
     String fancytitle2 = "VegeMight ©";
 
@@ -56,6 +58,8 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         gamepadEx1.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER).whenPressed(new ConditionalCommand(new goBackwardInScoringStages(), new goBackwardInScoringStagesSpecimen(), () -> !specimen));
         gamepadEx1.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER).whenPressed(new ConditionalCommand(new goForwardInScoringStages(), new goForwardInScoringStagesSpecimen(), ()-> !specimen));
 
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> this.flagStatus=!flagStatus));
+        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ConditionalCommand(new InstantCommand(() -> HardwareReference.getInstance().flag.FlagUp()), new InstantCommand(()-> HardwareReference.getInstance().flag.FlagDown()), ()-> flagStatus));
         //Claw Rotation
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new AdjustClawRotation());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new AdjustClawRotationBack());
@@ -115,6 +119,10 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         //Other Telemetry
         telemetry.addData("Others", fancytitle);
         telemetry.addData("LiftVelo", hardware.leftSpool.getVelocity());
+        telemetry.addData("LiftTargetPosition", hardware.lift.targetLiftPosition);
+        telemetry.addData("LeftSpoolCurrent", hardware.leftSpool.getCurrent(CurrentUnit.MILLIAMPS));
+        telemetry.addData("RightSpoolCurrent", hardware.rightSpool.getCurrent(CurrentUnit.MILLIAMPS));
+        telemetry.addData("DOYOUWORK?", hardware.lift.DOYOUWORK);
 
         //Trademark
         telemetry.addLine(fancytitle);
