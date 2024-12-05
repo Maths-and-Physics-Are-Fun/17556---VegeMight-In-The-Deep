@@ -23,6 +23,7 @@ import org.firstinspires.ftc.teamcode.common.commands.lowLevel.PickUpSpecimen;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Specimen;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Wait;
 import org.firstinspires.ftc.teamcode.common.statuses.Alliance;
+import org.opencv.core.Mat;
 
 @Autonomous
 @Disabled
@@ -39,7 +40,7 @@ public class BaseSpecimenAuto extends LinearOpMode {
         CommandScheduler.getInstance().reset();
                 // Initialize the singleton hardware reference
         Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
-        hardware.initHardware(hardwareMap, gamepad1, gamepad2, -9, 65, Math.toRadians(270));
+        hardware.initHardware(hardwareMap, gamepad1, gamepad2, -9, 65, Math.toRadians(90));
         CommandScheduler.getInstance().schedule(new Idle());
     }
 
@@ -75,7 +76,7 @@ public class BaseSpecimenAuto extends LinearOpMode {
         TrajectoryActionBuilder trajActionBuilder;
         CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
                 // Go to specimen scoring position
-                new RRCommand(converter.convertTrajectoryToAction(hardware.currentPose.position.x, 37.5,  Math.toRadians(-90), DriveToConverter.MovementType.LINE_TO_Y)).alongWith(
+                new RRCommand(converter.convertTrajectoryToAction(hardware.currentPose.position.x, 33,  Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(
                 // Score
                     new SequentialCommandGroup(
                         new Wait(500),
@@ -87,10 +88,11 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 new Specimen(),
                 new Wait(500),
                 new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-                new Wait(1),
+                new Wait(300),
+                new InstantCommand(() -> HardwareReference.getInstance().wrist.wristSpecimenDeposit()),
                 new Idle().alongWith(
                 // Go backwards
-                new RRCommand(converter.convertTrajectoryToAction(HardwareReference.getInstance().currentPose.position.x, 45, Math.toRadians(-90), DriveToConverter.MovementType.LINE_TO_Y)),
+                new RRCommand(converter.convertTrajectoryToAction(HardwareReference.getInstance().currentPose.position.x, 45, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
                 wait = new Wait(0),
                 new WaitUntilCommand(wait::isFinished)),
 
@@ -100,11 +102,11 @@ public class BaseSpecimenAuto extends LinearOpMode {
                         // Go to sample 1
                         .lineToY(10)
                         // Strafe in front of the sample
-                        .strafeTo(new Vector2d(-52, 10))
+                        .strafeTo(new Vector2d(-44, 10))
                         // Push Sample 1 into the observation zone
-                        .splineToLinearHeading(new Pose2d(-52, 64, Math.toRadians(90)), Math.toRadians(90))
+                        .splineToLinearHeading(new Pose2d(-44, 64, Math.toRadians(90)), Math.toRadians(90))
                         // Go backwards slightly
-                        .lineToY(48)
+                        .lineToY(43)
                         .build()
                 ),
 
@@ -124,13 +126,14 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 //new RRCommand(converter.convertTrajectoryToAction(-52, 48, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_Y)),
                 new HoverSpecimenBeforeGrab(),
                 new Wait(800),
+                new RRCommand(converter.convertTrajectoryToAction(-44, 44, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_Y)),
                 new PickUpSpecimen(),
 
                 // Take our arm
                 // Pick up sample
 
                 // Go back to submersible
-                new RRCommand(converter.convertTrajectoryToAction(-4, 31, Math.toRadians(-90), DriveToConverter.MovementType.SPLINE_TO_LINEAR_HEADING)).alongWith(
+                new RRCommand(converter.convertTrajectoryToAction(-5, 34, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(
                   new HoverSpecimenBeforeDeposit()
                 ),
                 new Specimen(),
@@ -138,10 +141,10 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
                 new Wait(1),
                 new Idle().alongWith(
-                                new RRCommand(converter.convertTrajectoryToAction(HardwareReference.getInstance().currentPose.position.x, 45, Math.toRadians(-90), DriveToConverter.MovementType.LINE_TO_Y))),
+                                new RRCommand(converter.convertTrajectoryToAction(HardwareReference.getInstance().currentPose.position.x, 45, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING))),
 
                 // Go to observation zone
-                new RRCommand(converter.convertTrajectoryToAction(-52, 44, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_LINEAR_HEADING)),
+                new RRCommand(converter.convertTrajectoryToAction(-52, 41, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
 
                 // Take our arm
                 // Pick up sample
@@ -149,7 +152,7 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 new Wait(800),
                 new PickUpSpecimen(),
                 // Go to submersible
-                new RRCommand(converter.convertTrajectoryToAction(0, 27, Math.toRadians(-90), DriveToConverter.MovementType.SPLINE_TO_LINEAR_HEADING)).alongWith(
+                new RRCommand(converter.convertTrajectoryToAction(0, 34, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(
                         new HoverSpecimenBeforeDeposit()
                 ),
 
@@ -157,7 +160,7 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 // Score
 
                 // Go backwards
-                new RRCommand(converter.convertTrajectoryToAction(HardwareReference.getInstance().currentPose.position.x, 45, Math.toRadians(-90), DriveToConverter.MovementType.LINE_TO_Y)),
+                //new RRCommand(converter.convertTrajectoryToAction(HardwareReference.getInstance().currentPose.position.x, 45, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
                 new Specimen(),
                 new Wait(500),
                 new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
@@ -165,7 +168,7 @@ public class BaseSpecimenAuto extends LinearOpMode {
                 new Idle(),
 
                 // Park in observation
-                new RRCommand(converter.convertTrajectoryToAction(-62, 55, Math.toRadians(90), DriveToConverter.MovementType.LINE_TO_Y)),
+                new RRCommand(converter.convertTrajectoryToAction(-62, 55, Math.toRadians(90), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
                 //new InstantCommand(() -> HardwareReference.getInstance().flag.FlagUp()),
                 new InstantCommand(this::requestOpModeStop)
         ));

@@ -27,11 +27,12 @@ public class goForwardInScoringStagesSpecimen extends SelectCommand {
                     put(ScoreSystem.HOVER_SPECIMEN_BEFORE_GRAB, new PickUpSpecimen().alongWith(new Rumble()));
                     put(ScoreSystem.HOVER_SPECIMEN_BEFORE_DEPOSIT, new SequentialCommandGroup(
                             new Specimen().alongWith(new Rumble()),
-                            new Wait(300),
+                            new Wait(350),
                             new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-                            new Wait(500),
+                            new Wait(300),
+                            new InstantCommand(() -> HardwareReference.getInstance().wrist.wristSpecimenDeposit()).andThen(
                             new Idle()
-                            )
+                            ))
                     );
                 }},
                 () -> HardwareReference.getInstance().currentStatus

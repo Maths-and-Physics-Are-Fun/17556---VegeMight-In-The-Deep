@@ -27,7 +27,7 @@ public class HoverSpecimenBeforeGrab extends CommandBase {
         ).alongWith(
                 new InstantCommand(() -> hardware.currentStatus = ScoreSystem.HOVER_SPECIMEN_BEFORE_GRAB)
         ).alongWith(
-                new InstantCommand(()-> hardware.claw.clawRotSetPosition(4))
+                new InstantCommand(()-> hardware.claw.clawRotSetPosition(0))
         ).andThen(
                 new SequentialCommandGroup(
                         new Wait(300),

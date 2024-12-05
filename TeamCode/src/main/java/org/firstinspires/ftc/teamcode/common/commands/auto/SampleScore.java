@@ -22,16 +22,17 @@ public class SampleScore extends SequentialCommandGroup {
             ),
             new Wait(300),
             new RRCommand(DriveToConverter.convertTrajectoryToAction(xDest, 45, Math.toRadians(270), DriveToConverter.MovementType.STRAFE_TO)),
-            new Wait(300),
+            new Wait(400),
             new Grab(),
             new Idle(),
-            new RRCommand(DriveToConverter.convertTrajectoryToAction(55, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
+            new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
             new Deposit()
             ),
-            new RRCommand(DriveToConverter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.LINE_TO_Y)),
+            new Wait(100),
+            new RRCommand(DriveToConverter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
             new Wait (700),
             new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-            new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.LINE_TO_Y)),
+            new RRCommand(DriveToConverter.convertTrajectoryToAction(46, 50,  Math.toRadians(45), DriveToConverter.MovementType.STRAFE_TO)),
             new Idle().alongWith(
                     new RRCommand(DriveToConverter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
             )
