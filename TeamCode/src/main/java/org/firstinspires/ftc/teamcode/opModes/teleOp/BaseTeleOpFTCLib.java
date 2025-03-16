@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opModes.teleOp;
 
 import androidx.annotation.NonNull;
 
+import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
@@ -24,6 +25,7 @@ import org.firstinspires.ftc.teamcode.common.commands.lowLevel.AdjustWristUp;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Idle;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.Park;
 import org.firstinspires.ftc.teamcode.common.commands.lowLevel.ToggleClaw;
+import org.firstinspires.ftc.teamcode.common.statuses.ScoreSystem;
 
 @TeleOp
 @Disabled
@@ -60,6 +62,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
 
         gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new InstantCommand(()-> this.flagStatus=!flagStatus));
         gamepadEx2.getGamepadButton(GamepadKeys.Button.Y).whenPressed(new ConditionalCommand(new InstantCommand(() -> HardwareReference.getInstance().flag.FlagUp()), new InstantCommand(()-> HardwareReference.getInstance().flag.FlagDown()), ()-> flagStatus));
+
         //Claw Rotation
         gamepadEx1.getGamepadButton(GamepadKeys.Button.X).whenPressed(new AdjustClawRotation());
         gamepadEx1.getGamepadButton(GamepadKeys.Button.B).whenPressed(new AdjustClawRotationBack());
@@ -86,11 +89,30 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         CommandScheduler.getInstance().schedule(new InstantCommand(
                 () -> HardwareReference.getInstance().lift.adjustPosition((int) gamepad2.left_stick_y*15)
         ));
+        // Left trigger to slow down, right trigger to speed up, no trigger keeps default speed
+        // Note: any position other than Idle defaults to slower values
         CommandScheduler.getInstance().schedule(new ConditionalCommand(
-                new InstantCommand(() -> hardware.velocityAdjuster = 0.5),
-                new InstantCommand(() -> hardware.velocityAdjuster = 0.85),
-                () -> gamepadEx1.gamepad.right_trigger > 0.5 || gamepadEx1.gamepad.left_trigger > 0.5
+                new ConditionalCommand(
+                        new InstantCommand(() -> hardware.velocityAdjuster = 1),
+                        new ConditionalCommand(
+                                new InstantCommand(() -> hardware.velocityAdjuster = 0.5),
+                                new InstantCommand(() -> hardware.velocityAdjuster = 0.85),
+                                () -> gamepadEx1.gamepad.left_trigger > 0.5
+                        ),
+                        () -> gamepadEx1.gamepad.right_trigger > 0.5
+                ),
+                new ConditionalCommand(
+                        new InstantCommand(() -> hardware.velocityAdjuster = 0.7),
+                        new ConditionalCommand(
+                                new InstantCommand(() -> hardware.velocityAdjuster = 0.3),
+                                new InstantCommand(() -> hardware.velocityAdjuster = 0.5),
+                                () -> gamepadEx1.gamepad.left_trigger > 0.5
+                        ),
+                        () -> gamepadEx1.gamepad.right_trigger > 0.5
+                ),
+                () -> hardware.currentStatus == ScoreSystem.IDLE
         ));
+
         CommandScheduler.getInstance().schedule(new InstantCommand(
                 () -> hardware.lift.updateDistance(hardware.leftSpool.getCurrentPosition())
         ));

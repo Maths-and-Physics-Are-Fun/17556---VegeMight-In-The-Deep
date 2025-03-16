@@ -31,7 +31,7 @@ public class HardwareReference {
 
     public ScoreSystem currentStatus = ScoreSystem.IDLE;
     public ClawStatus clawStatus;
-    public double velocityAdjuster = 1;
+    public double velocityAdjuster = 0.85;
 
     public Gamepad gamepad1;
     public Gamepad gamepad2;
