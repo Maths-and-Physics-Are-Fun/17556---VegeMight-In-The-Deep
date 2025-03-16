@@ -9,8 +9,8 @@ public class Globals {
     public static double WRIST_DEPOSIT = 0.51;
     public static double WRIST_PARK = 0.455;
     public static double WRIST_SPECIMEN_DEPOSIT = 0.9;
-    public static double WRIST_SPECIMEN_DEPOSIT_TELEOP = 0.77;
-    public static double WRIST_SPECIMEN_PICKUP = 0.5;
+    public static double WRIST_SPECIMEN_DEPOSIT_TELEOP = 0.79;
+    public static double WRIST_SPECIMEN_PICKUP = 0.55;
 
     public static double CLAW_OPEN = 0.8;
     public static double CLAW_CLOSED = 0.40; //1;
