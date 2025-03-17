@@ -92,23 +92,26 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         // Left trigger to slow down, right trigger to speed up, no trigger keeps default speed
         // Note: any position other than Idle defaults to slower values
         CommandScheduler.getInstance().schedule(new ConditionalCommand(
+                //IF IDLE
                 new ConditionalCommand(
+                        new InstantCommand(() -> hardware.velocityAdjuster = 0.7), //SLOW DOWN ON RIGHT TRIGGER
                         new InstantCommand(() -> hardware.velocityAdjuster = 1),
-                        new ConditionalCommand(
-                                new InstantCommand(() -> hardware.velocityAdjuster = 0.5),
-                                new InstantCommand(() -> hardware.velocityAdjuster = 0.85),
-                                () -> gamepadEx1.gamepad.left_trigger > 0.5
-                        ),
                         () -> gamepadEx1.gamepad.right_trigger > 0.5
                 ),
                 new ConditionalCommand(
-                        new InstantCommand(() -> hardware.velocityAdjuster = 0.7),
+                        //IF DEPOSIT
                         new ConditionalCommand(
-                                new InstantCommand(() -> hardware.velocityAdjuster = 0.3),
-                                new InstantCommand(() -> hardware.velocityAdjuster = 0.5),
-                                () -> gamepadEx1.gamepad.left_trigger > 0.5
+                                new InstantCommand(() -> hardware.velocityAdjuster = 0.8), //SPEED UP ON RIGHT TRIGGER
+                                new InstantCommand(() -> hardware.velocityAdjuster = 0.7),
+                                () -> gamepadEx1.gamepad.right_trigger > 0.5
                         ),
-                        () -> gamepadEx1.gamepad.right_trigger > 0.5
+                        //ELSE
+                        new ConditionalCommand(
+                                new InstantCommand(() -> hardware.velocityAdjuster = 0.5),//SLOW DOWN ON RIGHT TRIGGER
+                                new InstantCommand(() -> hardware.velocityAdjuster = 0.7),
+                                () -> gamepadEx1.gamepad.right_trigger > 0.5
+                        ),
+                        () -> hardware.currentStatus == ScoreSystem.DEPOSIT
                 ),
                 () -> hardware.currentStatus == ScoreSystem.IDLE
         ));
