@@ -56,9 +56,11 @@ public class BaseSampleAuto extends LinearOpMode {
                 new RRCommand(converter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
                     new SequentialCommandGroup(
                         new Wait(500),
+                        //Preload
                         new Deposit()
                     )
                 ),
+                //Score 1
                 new Wait(500),
                 new RRCommand(converter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
                 new Wait (400),
@@ -68,7 +70,9 @@ public class BaseSampleAuto extends LinearOpMode {
                 new Idle().alongWith(
                         new RRCommand(converter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
                 ),
+                //Score 2
                 new SampleScore(45),
+                //Score 3
                 new SampleScore(60),
 
                 new RRCommand(converter.convertTrajectoryToAction(18, 18,  Math.toRadians(180), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
