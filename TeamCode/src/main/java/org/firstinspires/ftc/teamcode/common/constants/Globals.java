@@ -13,7 +13,7 @@ public class Globals {
     public static double WRIST_SPECIMEN_PICKUP = 0.55;
 
     public static double CLAW_OPEN = 0.8;
-    public static double CLAW_CLOSED = 0.40; //1;
+    public static double CLAW_CLOSED = 0.36; //1;
 
     public static double ARM_IDLE = 0; //0.028;
     public static double ARM_HOVER = 0.4942;

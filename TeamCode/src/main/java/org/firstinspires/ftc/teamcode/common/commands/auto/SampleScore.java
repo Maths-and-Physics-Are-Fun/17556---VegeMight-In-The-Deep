@@ -20,12 +20,14 @@ public class SampleScore extends SequentialCommandGroup {
             //SCRIMMAGE
             //Robot is at POINT A (50,50)
             //Go to position of sample
-            new RRCommand(DriveToConverter.convertTrajectoryToAction(xDest,45, Math.toRadians(270),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(
-                    new Hover()
+            new Hover().alongWith(
+                    new Wait(400),
+                    new RRCommand(DriveToConverter.convertTrajectoryToAction(xDest,45, Math.toRadians(270),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING))
             ),
             new Wait(100),
             //Grab Sample
             new Grab(),
+            new Wait(200),
             new Idle(),
             //Go to Bucket
             new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
@@ -37,11 +39,13 @@ public class SampleScore extends SequentialCommandGroup {
             new Wait (700),
             //Deposit
             new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
+            new Wait(200),
             //Go to Point A
+            new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
             //Turn
             new Idle().alongWith(
                 new RRCommand(DriveToConverter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
-            )
+            ))
             //End
 
 
