@@ -1,6 +1,50 @@
-## NOTICE
+## THIS REPOSITORY IS NOT BEING USED FOR THE AUSTRALIAN PACIFIC OPEN CHAMPIONSHIP; Please see https://github.com/Cha-rlie/VegeMight_FTC_17556_Into_the_Deep_APOC
+This repository contains the public FTC SDK for the INTO THE DEEP (2024-2025) competition season. This is the public repository for all of VegeMight 17556's code for, and up to Australian National Championships. Small updates to this repo will be made for a scrimmage attended a while before APOC; however, we do not plan on updating this repo. We used FTCLib and RoadRunner; however have transitioned to using other libraries. Feel free to use this code or take inspiration from it.
 
-This repository contains the public FTC SDK for the INTO THE DEEP (2024-2025) competition season.
+## What is our code capable of doing
+✅ This code contains an unfinished 3+0 and a finished 0+4.
+✅ A working TeleOp (Without level 4 ascent 🤔). With working subsystems. 
+✅ Turning you into a passionate FTC competitor.
+
+If you have any questions, please contact us at vegemightrobotics@gmail.com, or message our instagram (vegemight.robotics). We are happy to answer any questions you have or provide support.
+
+## NON PLUS ULTRA
+Below is jargon that I can't be bothered to delete/dunno if its legal to delete :D
+You may recognise this as the jargon that appears at bottom of the FTC SDK. Unless u want to
+
+## YOU HAVE BEEN WARNED
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## NOTICE
+This repository contains the public FTC SDK for the INTO THE DEEP (2024-2025) competition season. 
 
 ## Welcome!
 This GitHub repository contains the source code that is used to build an Android app to control a *FIRST* Tech Challenge competition robot.  To use this SDK, download/clone the entire project to your local computer.
