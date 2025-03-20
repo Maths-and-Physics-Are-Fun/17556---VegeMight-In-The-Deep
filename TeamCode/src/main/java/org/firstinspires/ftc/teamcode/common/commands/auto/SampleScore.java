@@ -43,6 +43,7 @@ public class SampleScore extends SequentialCommandGroup {
             //Go to Point A
             new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
             //Turn
+            new Wait(200),
             new Idle().alongWith(
                 new RRCommand(DriveToConverter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
             ))

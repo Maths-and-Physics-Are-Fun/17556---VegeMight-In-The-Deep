@@ -67,6 +67,7 @@ public class BaseSampleAuto extends LinearOpMode {
                 new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
                 new Wait(100),
                 new RRCommand(converter.convertTrajectoryToAction(46, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
+                new Wait (200),
                 new Idle().alongWith(
                         new RRCommand(converter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
                 ),
@@ -75,10 +76,31 @@ public class BaseSampleAuto extends LinearOpMode {
                 //Score 3
                 new SampleScore(60),
 
-                new RRCommand(converter.convertTrajectoryToAction(18, 18,  Math.toRadians(180), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
-                        //Park
-                        new Park()
+                //Score 4
+                new RRCommand(converter.convertTrajectoryToAction(50,50,Math.toRadians(315),DriveToConverter.MovementType.TURN)),
+                new RRCommand(converter.convertTrajectoryToAction(46, 50, Math.toRadians(315),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
+                new Wait(100),
+                //Grab Sample
+                new Grab(),
+                new Wait(200),
+                new Idle(),
+                //Go to Bucket
+                new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
+                        new Deposit()
                 ),
+                new Wait(100),
+                //Move Forwards
+                new RRCommand(DriveToConverter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
+                new Wait (700),
+                //Deposit
+                new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
+                new Wait(200),
+                //Go to Point A
+                new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
+                //Turn
+                new Idle().alongWith(
+                    new RRCommand(DriveToConverter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
+                )),
         new InstantCommand(this::requestOpModeStop)
 
         ));
