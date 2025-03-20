@@ -3,7 +3,9 @@ This repository contains the public FTC SDK for the INTO THE DEEP (2024-2025) co
 
 ## What is our code capable of doing
 ✅ This code contains an unfinished 3+0 and a finished 0+4.
+
 ✅ A working TeleOp (Without level 4 ascent 🤔). With working subsystems. 
+
 ✅ Turning you into a passionate FTC competitor.
 
 If you have any questions, please contact us at vegemightrobotics@gmail.com, or message our instagram (vegemight.robotics). We are happy to answer any questions you have or provide support.
