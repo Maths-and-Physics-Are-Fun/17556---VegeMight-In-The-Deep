@@ -78,7 +78,9 @@ public class BaseSampleAuto extends LinearOpMode {
 
                 //Score 4
                 new RRCommand(converter.convertTrajectoryToAction(50,50,Math.toRadians(315),DriveToConverter.MovementType.TURN)),
-                new RRCommand(converter.convertTrajectoryToAction(46, 50, Math.toRadians(315),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
+                new RRCommand(converter.convertTrajectoryToAction(61 /*46*/, 54 /*42*/, Math.toRadians(315),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(
+                    new Hover().alongWith()
+                ),
                 new Wait(100),
                 //Grab Sample
                 new Grab(),
@@ -97,6 +99,8 @@ public class BaseSampleAuto extends LinearOpMode {
                 new Wait(200),
                 //Go to Point A
                 new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
+                        new Wait(200)
+                ),
                 //Turn
                 new Idle().alongWith(
                     new RRCommand(DriveToConverter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
