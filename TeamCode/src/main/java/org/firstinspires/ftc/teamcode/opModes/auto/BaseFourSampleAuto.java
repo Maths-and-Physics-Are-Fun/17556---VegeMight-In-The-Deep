@@ -32,7 +32,7 @@ public class BaseFourSampleAuto extends LinearOpMode {
         // Reset the command scheduler singleton
         CommandScheduler.getInstance().reset();
         // Initialize the singleton hardware reference
-        Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
+        // Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
         hardware.initHardware(hardwareMap, gamepad1, gamepad2, 37, 64, Math.toRadians(270));
         CommandScheduler.getInstance().schedule(new Idle());
     }
@@ -47,61 +47,61 @@ public class BaseFourSampleAuto extends LinearOpMode {
         //Update Pose
         //Update Pose without going into hardware???????
         CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
-                //Go to Sample Deposit Area
-                new RRCommand(converter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
-                    new SequentialCommandGroup(
-                        new Wait(200),
-                        //Preload
-                        new Deposit()
-                    )
-                ),
-                //Score 1
-                new Wait(200),
-                new RRCommand(converter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
-                new Wait (400),
-                new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-                new Wait(100),
-                new RRCommand(converter.convertTrajectoryToAction(46, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
-                new Wait (200).alongWith(
-                    new Idle()
-                ),
-                new RRCommand(converter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN)),
-                //Score 2
-                new SampleScore(46),
-                //Score 3
-                new SampleScore(60),
+            //Go to Sample Deposit Area
+            new RRCommand(converter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
+                new SequentialCommandGroup(
+                    new Wait(200),
+                    //Preload
+                    new Deposit()
+                )
+            ),
+            //Score 1
+            new Wait(300),
+            new RRCommand(converter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
+            new Wait (200),
+            new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
+            new Wait(230),
+            new RRCommand(converter.convertTrajectoryToAction(46, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
+            new Wait (200).alongWith(
+                new Idle()
+            ),
+            new RRCommand(converter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN)),
+            //Score 2
+            new SampleScore(46),
+            //Score 3
+            new SampleScore(60),
 
-                //Score 4
-                new RRCommand(converter.convertTrajectoryToAction(50,45,Math.toRadians(315),DriveToConverter.MovementType.TURN)).alongWith(
-                        new Hover().alongWith(new InstantCommand(() -> HardwareReference.getInstance().claw.clawRotSetPositionExact(0.2)))
-                ),
-                new RRCommand(converter.convertTrajectoryToAction(51 /*46*/, 38 /*42*/, Math.toRadians(315),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(                ),
-                new Wait(100),
-                //Grab Sample
-                new Grab(),
-                new Wait(200),
-                new Idle().alongWith(
-                        new Wait(200),
-                        new InstantCommand(() -> HardwareReference.getInstance().claw.clawRotSetPositionExact(0))),
-                //Go to Bucket
-                new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
-                        new Deposit()
-                ),
-                new Wait(100),
-                //Move Forwards
-                new RRCommand(DriveToConverter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
-                new Wait (700),
-                //Deposit
-                new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-                new Wait(200),
-                //Go to Point A
-                new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
-                        new Wait(200)
-                ),
-                //Turn
-                new Idle().alongWith(
-                    new RRCommand(DriveToConverter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
-                ),
+            //Score 4
+            new RRCommand(converter.convertTrajectoryToAction(50,41.5,Math.toRadians(315),DriveToConverter.MovementType.TURN)).alongWith(
+                    new Hover().alongWith(new InstantCommand(() -> HardwareReference.getInstance().claw.clawRotSetPositionExact(0.2)))
+            ),
+            new RRCommand(converter.convertTrajectoryToAction(51 /*46*/, 38 /*42*/, Math.toRadians(315),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(                ),
+            new Wait(200),
+            //Grab Sample
+            new Grab(),
+            new Wait(200),
+            new InstantCommand(() -> HardwareReference.getInstance().claw.clawRotSetPositionExact(0)).alongWith(
+                    new Wait(200).alongWith(
+                            new Idle()
+                    )
+            ),
+
+            //Go to Bucket
+            new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
+                    new Deposit()
+            ),
+            new Wait(100),
+            //Move Forwards
+            new RRCommand(DriveToConverter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
+            new Wait (300),
+            //Deposit
+            new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
+            new Wait(200),
+            //Go to Point A
+            new RRCommand(DriveToConverter.convertTrajectoryToAction(55, 48,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(
+                    new Wait(200)
+            ),
+            new Idle(),
         new InstantCommand(this::requestOpModeStop))
 
         );

@@ -21,9 +21,9 @@ public class SampleScore extends SequentialCommandGroup {
             //Robot is at POINT A (50,50)
             //Go to position of sample
             new Hover().alongWith(
-                    new Wait(400),
+                    new Wait(400).andThen(
                     new RRCommand(DriveToConverter.convertTrajectoryToAction(xDest,45, Math.toRadians(270),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING))
-            ),
+                    )),
             new Wait(100),
             //Grab Sample
             new Grab(),

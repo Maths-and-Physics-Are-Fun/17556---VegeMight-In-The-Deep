@@ -37,7 +37,7 @@ public class BaseThreeSampleAuto extends LinearOpMode {
         // Reset the command scheduler singleton
         CommandScheduler.getInstance().reset();
         // Initialize the singleton hardware reference
-        Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
+        // Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
         hardware.initHardware(hardwareMap, gamepad1, gamepad2, 37, 64, Math.toRadians(270));
         CommandScheduler.getInstance().schedule(new Idle());
     }

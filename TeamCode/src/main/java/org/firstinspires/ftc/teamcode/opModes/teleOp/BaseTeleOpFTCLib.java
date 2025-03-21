@@ -161,5 +161,7 @@ public abstract class BaseTeleOpFTCLib extends CommandOpMode {
         telemetry.update();
     }
 
+    public void
+
     public abstract void initalize() throws InterruptedException;
 }
