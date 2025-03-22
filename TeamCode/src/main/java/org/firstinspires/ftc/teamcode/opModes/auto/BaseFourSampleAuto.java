@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.opModes.auto;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
@@ -22,6 +23,7 @@ import org.firstinspires.ftc.teamcode.common.statuses.Alliance;
 
 @Autonomous
 @Disabled
+@Config
 
 public class BaseFourSampleAuto extends LinearOpMode {
     private final HardwareReference hardware = HardwareReference.getInstance();
@@ -33,7 +35,7 @@ public class BaseFourSampleAuto extends LinearOpMode {
         CommandScheduler.getInstance().reset();
         // Initialize the singleton hardware reference
         // Alliance alliance = this.getClass().getSimpleName().contains("Blue") ? Alliance.BLUE : Alliance.RED;
-        hardware.initHardware(hardwareMap, gamepad1, gamepad2, 37, 64, Math.toRadians(270));
+        hardware.initHardware(hardwareMap, gamepad1, gamepad2, 46/*37*/, 62, Math.toRadians(45/*270*/));
         CommandScheduler.getInstance().schedule(new Idle());
     }
     @Override
@@ -48,34 +50,32 @@ public class BaseFourSampleAuto extends LinearOpMode {
         //Update Pose without going into hardware???????
         CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
             //Go to Sample Deposit Area
-            new RRCommand(converter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
+            new RRCommand(converter.convertTrajectoryToAction(51, 51,  Math.toRadians(45), DriveToConverter.MovementType.STRAFE_TO_HEADING)).alongWith(
                 new SequentialCommandGroup(
-                    new Wait(200),
+                    new Wait(100),
                     //Preload
                     new Deposit()
                 )
             ),
             //Score 1
-            new Wait(300),
-            new RRCommand(converter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
             new Wait (200),
             new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-            new Wait(230),
+            new Wait(100),
             new RRCommand(converter.convertTrajectoryToAction(46, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
-            new Wait (200).alongWith(
+            new Wait (50).alongWith(
                 new Idle()
             ),
             new RRCommand(converter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN)),
             //Score 2
             new SampleScore(46),
             //Score 3
-            new SampleScore(60),
+            new SampleScore(58),
 
             //Score 4
             new RRCommand(converter.convertTrajectoryToAction(50,41.5,Math.toRadians(315),DriveToConverter.MovementType.TURN)).alongWith(
                     new Hover().alongWith(new InstantCommand(() -> HardwareReference.getInstance().claw.clawRotSetPositionExact(0.2)))
             ),
-            new RRCommand(converter.convertTrajectoryToAction(51 /*46*/, 38 /*42*/, Math.toRadians(315),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(                ),
+            new RRCommand(converter.convertTrajectoryToAction(48.5 /*46*/, 37 /*42*/, Math.toRadians(315),DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(                ),
             new Wait(200),
             //Grab Sample
             new Grab(),
@@ -90,10 +90,10 @@ public class BaseFourSampleAuto extends LinearOpMode {
             new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
                     new Deposit()
             ),
-            new Wait(100),
+            new Wait(70),
             //Move Forwards
             new RRCommand(DriveToConverter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
-            new Wait (300),
+            new Wait (100),
             //Deposit
             new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
             new Wait(200),
@@ -101,8 +101,10 @@ public class BaseFourSampleAuto extends LinearOpMode {
             new RRCommand(DriveToConverter.convertTrajectoryToAction(55, 48,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)).alongWith(
                     new Wait(200)
             ),
-            new Idle(),
-        new InstantCommand(this::requestOpModeStop))
+            new Idle().andThen(
+                    new Wait (300),
+                    new InstantCommand(this::requestOpModeStop))
+            )
 
         );
 

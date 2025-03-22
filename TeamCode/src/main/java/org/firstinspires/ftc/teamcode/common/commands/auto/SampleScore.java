@@ -39,11 +39,11 @@ public class SampleScore extends SequentialCommandGroup {
             new Wait (700),
             //Deposit
             new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
-            new Wait(200),
+            new Wait(300),
             //Go to Point A
             new RRCommand(DriveToConverter.convertTrajectoryToAction(50, 50,  Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO)).alongWith(
             //Turn
-            new Wait(200),
+            new Wait(300),
             new Idle().alongWith(
                 new RRCommand(DriveToConverter.convertTrajectoryToAction(50,50,Math.toRadians(270), DriveToConverter.MovementType.TURN))
             ))

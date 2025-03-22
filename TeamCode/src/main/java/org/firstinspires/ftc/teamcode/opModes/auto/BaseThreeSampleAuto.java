@@ -60,7 +60,7 @@ public class BaseThreeSampleAuto extends LinearOpMode {
                         )
                 ),
                 new Wait(500),
-                new RRCommand(converter.convertTrajectoryToAction(55, 55, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
+                new RRCommand(converter.convertTrajectoryToAction(53.5, 53.5, Math.toRadians(45), DriveToConverter.MovementType.SPLINE_TO_CONSTANT_HEADING)),
                 new Wait (400),
                 new InstantCommand(() -> HardwareReference.getInstance().claw.clawOpen()),
                 new Wait(100),
